@@ -6,6 +6,7 @@ import NotFoundPage from "@/features/not-found/pages/NotFoundPage";
 import PlacesPage from "@/features/places/pages/PlacesPage";
 import VirtualTourPage from "@/features/virtual-tour/page/VirtualTourPage";
 import { createBrowserRouter } from "react-router-dom";
+import PlaceDetailsPage from "@/features/places/pages/PlaceDetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
             {
                 path: "contact",
                 element: <ContactPage />,
+            },
+            {
+                path: "places/:id",
+                element: <PlaceDetailsPage />,
             },
         ]
     }
