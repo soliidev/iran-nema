@@ -1,23 +1,24 @@
-export const places = [
+import type { Place } from "../types/place";
+
+export const places: Place[] = [
     {
         id: 1,
         title: "تخت جمشید",
         city: "شیراز",
-        image: "/src/assets/images/places/perspolis.jpg",
+        province: "فارس",
+        image: "/images/places/perspolis.jpg",
         rating: 4.9,
+        category: "تاریخی",
+        hasVirtualTour: true,
     },
     {
         id: 2,
         title: "میدان نقش جهان",
         city: "اصفهان",
-        image: "/src/assets/images/places/naghsh-jahan.jpg",
+        province: "اصفهان",
+        image: "/images/places/naghsh-jahan.jpg",
         rating: 4.8,
-    },
-    {
-        id: 3,
-        title: "حافظیه",
-        city: "شیراز",
-        image: "/src/assets/images/places/hafezieh.jpg",
-        rating: 4.7,
+        category: "تاریخی",
+        hasVirtualTour: true,
     },
 ];

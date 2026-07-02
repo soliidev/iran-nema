@@ -1,17 +1,13 @@
-import Categories from "@/features/home/components/Categories";
-import CTA from "@/features/home/components/CTA";
-import FeaturedPlaces from "@/features/home/components/FeaturedPlaces";
-import Hero from "@/features/home/components/Hero";
-import Statistics from "@/features/home/components/Statistics";
+import Categories from "@/features/home/components/categories/Categories";
+import FeaturedPlaces from "@/features/home/components/featured-places/FeaturedPlaces";
+import { Hero } from "@/features/home/components/hero";
 
 const HomePage = () => {
     return (
         <>
             <Hero />
             <FeaturedPlaces />
-            <Statistics />
             <Categories />
-            <CTA />
         </>
     );
 }
