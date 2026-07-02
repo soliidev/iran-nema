@@ -1,0 +1,32 @@
+import Container from "@/components/layout/Container";
+import HeroBackground from "./HeroBackground";
+import HeroSearch from "./HeroSearch";
+import HeroContent from "./HeroContent";
+import HeroStats from "./HeroStats";
+
+const Hero = () => {
+    return (
+        <section className="relative overflow-hidden py-32">
+            <HeroBackground />
+
+            <Container>
+
+                <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
+
+                    <HeroContent />
+
+                    <div className="mt-10 w-full max-w-xl">
+                        <HeroSearch />
+                    </div>
+
+                    <div className="mt-16 w-full">
+                        <HeroStats />
+                    </div>
+
+                </div>
+            </Container>
+        </section>
+    );
+}
+
+export default Hero;
