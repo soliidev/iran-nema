@@ -1,15 +1,17 @@
 import PlaceCard from "@/features/places/components/PlaceCard";
 import { places } from "@/features/places/data/places";
 import Container from "@/components/layout/Container";
+import SectionTitle from "@/components/common/SectionTitle";
 
 const FeaturedPlaces = () => {
     return (
         <section className="py-20">
             <Container>
 
-                <h2 className="mb-8 text-3xl font-bold">
-                    مکان‌های پیشنهادی
-                </h2>
+                <SectionTitle
+                    title="مکان‌های پیشنهادی"
+                    description="محبوب‌ترین جاذبه‌های گردشگری ایران را به صورت مجازی بازدید کنید."
+                />
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 

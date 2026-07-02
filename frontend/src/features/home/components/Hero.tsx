@@ -1,22 +1,22 @@
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import HeroSearch from "./HeroSearch";
+import { heroContent } from "../constants";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
     return (
         <section className="py-24">
             <Container>
 
-                <h1 className="text-5xl font-bold">
-                    ایران را از زاویه‌ای جدید کشف کنید
-                </h1>
+                <h1>{heroContent.title}</h1>
 
-                <p className="mt-6 max-w-2xl text-muted-foreground">
-                    گردش مجازی، تصاویر ۳۶۰ درجه، اطلاعات تاریخی و بازدید آنلاین از مکان‌های دیدنی ایران.
-                </p>
+                <p>{heroContent.description}</p>
 
-                <Button className="mt-8">
-                    شروع بازدید
+                <Button asChild>
+                    <Link to="/places">
+                        {heroContent.buttonText}
+                    </Link>
                 </Button>
 
                 <HeroSearch />
