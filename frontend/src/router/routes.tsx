@@ -1,10 +1,10 @@
 import MainLayout from "@/layouts/MainLayout";
-import AboutPage from "@/pages/AboutPage";
-import ContactPage from "@/pages/ContactPage";
-import HomePage from "@/pages/HomePage";
-import NotFoundPage from "@/pages/NotFoundPage";
-import PlacesPage from "@/pages/PlacesPage";
-import VirtualTourPage from "@/pages/VirtualTourPage";
+import AboutPage from "@/features/about/pages/AboutPage";
+import ContactPage from "@/features/contact/pages/ContactPage";
+import HomePage from "@/features/home/pages/HomePage";
+import NotFoundPage from "@/features/not-found/pages/NotFoundPage";
+import PlacesPage from "@/features/places/pages/PlacesPage";
+import VirtualTourPage from "@/features/virtual-tour/page/VirtualTourPage";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
