@@ -1,60 +1,61 @@
-import { Search, Moon, Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
+import DesktopMenu from "./DesktopMenu";
+import SearchButton from "./SearchButton";
+import ThemeToggle from "./ThemeToggle";
+import UserMenu from "./UserMenu";
+import MobileMenu from "./MobileMenu";
 import Container from "./Container";
-import { navigation } from "@/data/navigation";
-import { Link } from "react-router-dom";
 
-export default function Header() {
+const Header = () => {
+
     return (
-        <header className="border-b">
+
+        <header
+            className="
+                sticky
+                top-0
+                z-50
+                border-b
+                bg-background/80
+                backdrop-blur-md
+            "
+        >
+
             <Container>
-                <div className="flex h-16 items-center justify-between">
 
-                    <Link
-                        to="/"
-                        className="text-xl font-bold"
-                    >
-                        ایران‌نما
-                    </Link>
+                <div
+                    className="
+                        flex
+                        h-20
+                        items-center
+                        justify-between
+                    "
+                >
 
-                    <nav className="hidden items-center gap-8 md:flex">
-                        {navigation.map((item) => (
-                            <Link
-                                key={item.href}
-                                to={item.href}
-                                className="transition hover:text-primary"
-                            >
-                                {item.title}
-                            </Link>
-                        ))}
-                    </nav>
+                    <Logo />
+
+                    <DesktopMenu />
 
                     <div className="flex items-center gap-2">
 
-                        <Button variant="ghost" size="icon">
-                            <Search />
-                        </Button>
+                        <SearchButton />
 
-                        <Button variant="ghost" size="icon">
-                            <Moon />
-                        </Button>
+                        <ThemeToggle />
 
-                        <Button className="hidden md:flex">
-                            ورود
-                        </Button>
+                        <UserMenu />
 
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="md:hidden"
-                        >
-                            <Menu />
-                        </Button>
+                        <MobileMenu />
 
                     </div>
 
                 </div>
+
             </Container>
+
         </header>
+
     );
+
 }
+
+export default Header;

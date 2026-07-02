@@ -12,23 +12,22 @@ const PlaceCard = ({
     rating,
 }: Props) => {
     return (
-        <div className="rounded-xl border overflow-hidden">
-
+        <div className="group overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
             <img
                 src={image}
                 alt={title}
-                className="h-56 w-full object-cover"
+                className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
 
             <div className="p-4">
 
-                <h3 className="font-bold">
+                <h3 className="text-xl font-bold">
                     {title}
                 </h3>
 
-                <p>{city}</p>
+                <p className="mt-2 text-muted-foreground">{city}</p>
 
-                <p>⭐ {rating}</p>
+                <p className="mt-4 font-semibold text-primary">⭐ {rating}</p>
 
             </div>
 
