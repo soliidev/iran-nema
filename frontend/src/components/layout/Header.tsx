@@ -1,6 +1,8 @@
 import { Search, Moon, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Container from "./Container";
+import { navigation } from "@/data/navigation";
+import { Link } from "react-router-dom";
 
 export default function Header() {
     return (
@@ -8,16 +10,23 @@ export default function Header() {
             <Container>
                 <div className="flex h-16 items-center justify-between">
 
-                    <h1 className="text-xl font-bold">
+                    <Link
+                        to="/"
+                        className="text-xl font-bold"
+                    >
                         ایران‌نما
-                    </h1>
+                    </Link>
 
-                    <nav className="hidden md:flex gap-8">
-                        <a href="/">خانه</a>
-                        <a href="/">مکان‌ها</a>
-                        <a href="/">تور مجازی</a>
-                        <a href="/">درباره ما</a>
-                        <a href="/">تماس با ما</a>
+                    <nav className="hidden items-center gap-8 md:flex">
+                        {navigation.map((item) => (
+                            <Link
+                                key={item.href}
+                                to={item.href}
+                                className="transition hover:text-primary"
+                            >
+                                {item.title}
+                            </Link>
+                        ))}
                     </nav>
 
                     <div className="flex items-center gap-2">
