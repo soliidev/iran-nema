@@ -1,41 +1,30 @@
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
-export default function PlaceFilter() {
-    return (
-        <Select>
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+  categories: string[];
+};
 
-            <SelectTrigger className="h-12 w-56">
-
-                <SelectValue placeholder="دسته‌بندی" />
-
-            </SelectTrigger>
-
-            <SelectContent>
-
-                <SelectItem value="all">
-                    همه
-                </SelectItem>
-
-                <SelectItem value="historical">
-                    تاریخی
-                </SelectItem>
-
-                <SelectItem value="nature">
-                    طبیعی
-                </SelectItem>
-
-                <SelectItem value="religious">
-                    مذهبی
-                </SelectItem>
-
-            </SelectContent>
-
-        </Select>
-    );
+export default function PlaceFilter({ value, onChange, categories }: Props) {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className="h-12 w-44">
+        <SelectValue placeholder="دسته‌بندی" />
+      </SelectTrigger>
+      <SelectContent>
+        {categories.map((cat) => (
+          <SelectItem key={cat} value={cat}>
+            {cat === "all" ? "همه" : cat}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
 }
