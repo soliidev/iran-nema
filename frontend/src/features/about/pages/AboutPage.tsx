@@ -1,9 +1,56 @@
+import Container from "@/components/layout/Container";
+import { Breadcrumb } from "@/components/common";
+import { Helmet } from "react-helmet-async";
+import { Landmark,Users,Award,Target } from "lucide-react";
+
+const stats = [
+  { icon: Landmark, value: "۱۵۰+", label: "جاذبه گردشگری" },
+  { icon: Users, value: "۱۰K+", label: "بازدیدکنندگان" },
+  { icon: Award, value: "۵+", label: "سال تجربه" },
+  { icon: Target, value: "۳۱", label: "استان تحت پوشش" },
+];
+
 const AboutPage = () => {
-    return (
-        <div className="py-20 text-center text-3xl">
-            درباره ایران‌نما
-        </div>
-    );
-}
+  return (
+    <>
+      <Helmet>
+        <title>درباره ما | ایران‌نما</title>
+      </Helmet>
+      <section className="py-8">
+        <Container>
+          <Breadcrumb />
+          <div className="mt-8 grid gap-16 lg:grid-cols-2">
+            <div>
+              <h1 className="text-5xl font-black leading-tight">
+                درباره <span className="text-primary">ایران‌نما</span>
+              </h1>
+              <p className="mt-6 leading-8 text-muted-foreground">
+                ایران‌نما یک پلتفرم گردشگری مجازی است که با هدف معرفی جاذبه‌های تاریخی، طبیعی و فرهنگی ایران
+                طراحی شده است. ما با استفاده از فناوری تصاویر ۳۶۰ درجه و تور مجازی، تجربه‌ای متفاوت از
+                بازدید اماکن گردشگری را برای شما فراهم می‌کنیم.
+              </p>
+              <p className="mt-4 leading-8 text-muted-foreground">
+                هدف ما این است که هر فردی در هر نقطه از جهان بتواند از زیبایی‌های ایران بازدید کند و با
+                فرهنگ و تاریخ غنی این سرزمین آشنا شود.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              {stats.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={stat.label} className="rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
+                    <Icon className="mx-auto h-10 w-10 text-primary" />
+                    <h3 className="mt-4 text-3xl font-black">{stat.value}</h3>
+                    <p className="mt-1 text-muted-foreground">{stat.label}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
+};
 
 export default AboutPage;
