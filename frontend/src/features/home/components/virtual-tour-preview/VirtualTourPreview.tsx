@@ -3,7 +3,7 @@ import SectionTitle from "@/components/common/SectionTitle";
 import TourCard from "./TourCard";
 
 const tours = [
-  { id: 1, title: "تخت جمشید", location: "شیراز", image: "/images/places/perspolis.jpg" },
+  { id: 1, title: "تخت جمشید", location: "شیراز", image: "/images/places/persepolis/persepolis.jpg" },
   { id: 2, title: "میدان نقش جهان", location: "اصفهان", image: "/images/places/naghsh-jahan.jpg" },
   { id: 3, title: "حافظیه", location: "شیراز", image: "/images/places/hafezieh.jpg" },
 ];

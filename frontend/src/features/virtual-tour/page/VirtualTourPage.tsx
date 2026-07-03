@@ -8,17 +8,33 @@ import { Helmet } from "react-helmet-async";
 import { Play } from "lucide-react";
 import TourViewer360 from "../components/TourViewer360";
 
+type PanoramaSection = {
+  id: number;
+  title: string;
+  image: string;
+};
+
 type Tour = {
   id: number;
   title: string;
   location: string;
   image: string;
-  panorama?: string;
+  panoramas?: PanoramaSection[];
   duration: string;
 };
 
 const tours: Tour[] = [
-  { id: 1, title: "تخت جمشید", location: "شیراز", image: "/images/places/perspolis.jpg", panorama: "/images/places/perspolis360.jpg", duration: "۵:۳۲" },
+  {
+    id: 1,
+    title: "تخت جمشید",
+    location: "شیراز",
+    image: "/images/places/persepolis/persepolis.jpg",
+    panoramas: [
+      { id: 1, title: "تالار هفت‌ستون", image: "/images/places/persepolis/persepolis360_1.jpg" },
+      { id: 2, title: "کاخ صدستون", image: "/images/places/persepolis/persepolis360_2.jpg" },
+    ],
+    duration: "۵:۳۲",
+  },
   { id: 2, title: "میدان نقش جهان", location: "اصفهان", image: "/images/places/naghsh-jahan.jpg", duration: "۴:۱۵" },
   { id: 3, title: "حافظیه", location: "شیراز", image: "/images/places/hafezieh.jpg", duration: "۳:۴۵" },
   { id: 4, title: "ارگ بم", location: "بم", image: "/images/places/arg-e-bam.jpg", duration: "۶:۲۰" },
@@ -44,10 +60,11 @@ const VirtualTourPage = () => {
 
       {activeTourData ? (
         <TourViewer360
-          image={activeTourData.panorama || activeTourData.image}
+          image={activeTourData.panoramas?.[0]?.image || activeTourData.image}
           title={activeTourData.title}
           onClose={() => setActiveTour(null)}
-          isPanorama={!!activeTourData.panorama}
+          isPanorama={!!activeTourData.panoramas?.length}
+          panoramas={activeTourData.panoramas}
         />
       ) : (
         <section className="py-8">
@@ -79,7 +96,7 @@ const VirtualTourPage = () => {
                     </div>
                     <div className="absolute left-3 top-3 flex gap-2">
                       <span className="rounded-lg bg-black/60 px-3 py-1 text-xs text-white">{tour.duration}</span>
-                      {tour.panorama && (
+                      {tour.panoramas && tour.panoramas.length > 0 && (
                         <Badge variant="secondary" className="text-xs">۳۶۰°</Badge>
                       )}
                     </div>
