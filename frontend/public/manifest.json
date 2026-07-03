@@ -1,0 +1,19 @@
+{
+  "name": "ایران‌نما | Iran Nema",
+  "short_name": "ایران‌نما",
+  "description": "تجربه بازدید مجازی از جاذبه‌های گردشگری ایران",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f766e",
+  "dir": "rtl",
+  "lang": "fa",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
