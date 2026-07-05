@@ -9,19 +9,9 @@ const HeroStats = () => {
                 return (
                     <div
                         key={item.id}
-                        className="
-              rounded-2xl
-              border
-              bg-card/70
-              p-6
-              backdrop-blur
-              transition-all
-              hover:-translate-y-1
-              hover:border-primary
-              hover:shadow-lg
-            "
+                        className="rounded-2xl border bg-card/70 p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-primary hover:shadow-lg"
                     >
-                        <Icon className="mb-4 h-10 w-10 text-primary" />
+                        <Icon className="mb-4 h-10 w-full text-primary" />
 
                         <h3 className="text-3xl font-black">
                             {item.value}
