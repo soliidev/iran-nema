@@ -8,11 +8,11 @@ export const places: Place[] = [
     province: "فارس",
     description:
       "مجموعه تاریخی تخت جمشید یکی از باشکوه‌ترین آثار باستانی ایران و جهان است که در دوره هخامنشیان ساخته شده است. این اثر ارزشمند در فهرست میراث جهانی یونسکو قرار دارد و سالانه گردشگران بسیاری از آن بازدید می‌کنند.",
-    image: "/images/places/perspolis.jpg",
+    image: "/images/places/persepolis/persepolis.jpg",
     gallery: [
-      "/images/places/perspolis.jpg",
-      "/images/places/perspolis.jpg",
-      "/images/places/perspolis.jpg",
+      "/images/places/persepolis/persepolis.jpg",
+      "/images/places/persepolis/persepolis.jpg",
+      "/images/places/persepolis/persepolis.jpg",
     ],
     latitude: 29.935,
     longitude: 52.891,
@@ -27,10 +27,10 @@ export const places: Place[] = [
     province: "اصفهان",
     description:
       "میدان نقش جهان اصفهان یکی از بزرگ‌ترین میدان‌های جهان و از آثار مهم دوره صفوی است. این میدان با مسجد امام، مسجد شیخ لطف‌الله و کاخ عالی‌قاپو احاطه شده است.",
-    image: "/images/places/naghsh-jahan.jpg",
+    image: "/images/places/naghsh-jahan/naghsh-jahan.jpg",
     gallery: [
-      "/images/places/naghsh-jahan.jpg",
-      "/images/places/naghsh-jahan.jpg",
+      "/images/places/naghsh-jahan/naghsh-jahan.jpg",
+      "/images/places/naghsh-jahan/naghsh-jahan.jpg",
     ],
     latitude: 32.657,
     longitude: 51.677,
