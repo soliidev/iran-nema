@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/common";
 import PlaceGrid from "../components/PlaceGrid";
 import { useParams } from "react-router-dom";
 import { usePlace, useRelatedPlaces } from "../hooks/usePlace";
+import { Helmet } from "react-helmet-async";
 
 export default function PlaceDetailsPage() {
   const { id } = useParams();
@@ -27,26 +28,31 @@ export default function PlaceDetailsPage() {
   }
 
   return (
-    <section className="py-8">
-      <Container>
-        <Breadcrumb />
+    <>
+      <Helmet>
+        <title>{place.title} | ایران‌نما</title>
+      </Helmet>
+      <section className="py-8">
+        <Container>
+          <Breadcrumb />
 
-        <div className="mt-4 grid gap-10 lg:grid-cols-2">
-          <PlaceGallery />
-          <div className="space-y-8">
-            <PlaceInfo />
-            <PlaceLocation />
-            <PlaceActions />
+          <div className="mt-4 grid gap-10 lg:grid-cols-2">
+            <PlaceGallery />
+            <div className="space-y-8">
+              <PlaceInfo />
+              <PlaceLocation />
+              <PlaceActions />
+            </div>
           </div>
-        </div>
 
-        {relatedPlaces.length > 0 && (
-          <section className="mt-20">
-            <h2 className="mb-8 text-3xl font-bold">مکان‌های مشابه</h2>
-            <PlaceGrid places={relatedPlaces} />
-          </section>
-        )}
-      </Container>
-    </section>
+          {relatedPlaces.length > 0 && (
+            <section className="mt-20">
+              <h2 className="mb-8 text-3xl font-bold">مکان‌های مشابه</h2>
+              <PlaceGrid places={relatedPlaces} />
+            </section>
+          )}
+        </Container>
+      </section>
+    </>
   );
 }

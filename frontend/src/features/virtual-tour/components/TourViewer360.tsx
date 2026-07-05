@@ -2,26 +2,36 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { Viewer } from "@photo-sphere-viewer/core";
 import "@photo-sphere-viewer/core/index.css";
 import { Loader2, AlertTriangle } from "lucide-react";
+import type { PanoramaSection } from "../types/tour";
 
 type Props = {
   image: string;
   title: string;
   onClose: () => void;
   isPanorama?: boolean;
+  panoramas?: PanoramaSection[];
 };
 
-const TourViewer360 = ({ image, title, onClose, isPanorama }: Props) => {
+const TourViewer360 = ({ image, title, onClose, isPanorama, panoramas }: Props) => {
   if (!isPanorama) {
     return <SimpleViewer image={image} title={title} onClose={onClose} />;
   }
 
-  return <PanoramaViewer image={image} title={title} onClose={onClose} />;
+  return (
+    <PanoramaViewer
+      image={image}
+      title={title}
+      onClose={onClose}
+      panoramas={panoramas}
+    />
+  );
 };
 
-const PanoramaViewer = ({ image, title, onClose }: { image: string; title: string; onClose: () => void }) => {
+const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; title: string; onClose: () => void; panoramas?: PanoramaSection[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [activePanorama, setActivePanorama] = useState(image);
   const mountedRef = useRef(true);
 
   const destroyViewer = useCallback(() => {
@@ -47,9 +57,9 @@ const PanoramaViewer = ({ image, title, onClose }: { image: string; title: strin
       try {
         const viewer = new Viewer({
           container: containerRef.current,
-          panorama: image,
+          panorama: activePanorama,
           caption: title,
-          defaultZoomLvl: 50,
+          defaultZoomLvl: 0,
           navbar: ["zoom", "move", "fullscreen"],
           loadingImg: undefined,
         });
@@ -70,7 +80,7 @@ const PanoramaViewer = ({ image, title, onClose }: { image: string; title: strin
     img.onerror = () => {
       if (mountedRef.current) setStatus("error");
     };
-    img.src = image;
+    img.src = activePanorama;
 
     const timeout = setTimeout(() => {
       if (mountedRef.current && status === "loading") {
@@ -84,11 +94,46 @@ const PanoramaViewer = ({ image, title, onClose }: { image: string; title: strin
       clearTimeout(timeout);
       setTimeout(destroyViewer, 0);
     };
-  }, [image, title, destroyViewer, status]);
+  }, [activePanorama, title, destroyViewer, status]);
+
+  const handlePanoramaChange = (newImage: string) => {
+    setStatus("loading");
+    setActivePanorama(newImage);
+  };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
-      <div ref={containerRef} className="h-full w-full" />
+    <div className="fixed inset-0 z-50 bg-black flex">
+      <div ref={containerRef} className="flex-1 h-full w-full" />
+
+      {panoramas && panoramas.length > 0 && (
+        <div className="w-64 bg-black/90 border-l border-white/10 flex flex-col overflow-hidden">
+          <div className="p-4 border-b border-white/10">
+            <h3 className="text-white font-bold text-sm">سایر قسمت‌ها</h3>
+          </div>
+          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+            {panoramas.map((panorama) => (
+              <button
+                key={panorama.id}
+                onClick={() => handlePanoramaChange(panorama.image)}
+                className={`w-full text-right rounded-lg p-3 transition ${
+                  activePanorama === panorama.image
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-white/10 text-white hover:bg-white/20"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={panorama.image}
+                    alt={panorama.title}
+                    className="h-12 w-12 rounded-md object-cover"
+                  />
+                  <span className="text-sm font-medium">{panorama.title}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {status === "loading" && (
         <div className="absolute inset-0 flex items-center justify-center bg-black">

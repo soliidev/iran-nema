@@ -1,5 +1,5 @@
 import Container from "@/components/layout/Container";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 

@@ -1,14 +1,7 @@
 import Container from "@/components/layout/Container";
 import { Breadcrumb } from "@/components/common";
 import { Helmet } from "react-helmet-async";
-import { Landmark,Users,Award,Target } from "lucide-react";
-
-const stats = [
-  { icon: Landmark, value: "۱۵۰+", label: "جاذبه گردشگری" },
-  { icon: Users, value: "۱۰K+", label: "بازدیدکنندگان" },
-  { icon: Award, value: "۵+", label: "سال تجربه" },
-  { icon: Target, value: "۳۱", label: "استان تحت پوشش" },
-];
+import { stats } from "@/data/stats";
 
 const AboutPage = () => {
   return (
@@ -38,8 +31,10 @@ const AboutPage = () => {
               {stats.map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={stat.label} className="rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
-                    <Icon className="mx-auto h-10 w-10 text-primary" />
+                  <div key={stat.label} className="flex flex-col items-center rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
+                    <div className="flex items-center justify-center">
+                      <Icon className="h-10 w-10 text-primary" />
+                    </div>
                     <h3 className="mt-4 text-3xl font-black">{stat.value}</h3>
                     <p className="mt-1 text-muted-foreground">{stat.label}</p>
                   </div>

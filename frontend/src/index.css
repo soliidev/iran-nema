@@ -48,6 +48,7 @@
 }
 
 :root {
+  --radius: 0.625rem;
   --background: #f8fafc;
   --foreground: #1f2937;
   --card: #ffffff;

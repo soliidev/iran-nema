@@ -4,7 +4,6 @@ import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, C
 import { useState, useEffect } from "react";
 import { places } from "@/features/places/data/places";
 import { useNavigate } from "react-router-dom";
-import { SearchIcon } from "lucide-react";
 
 const SearchButton = () => {
   const [open, setOpen] = useState(false);
@@ -37,7 +36,7 @@ const SearchButton = () => {
 
   return (
     <>
-      <Button variant="ghost" size="icon" onClick={() => setOpen(true)}>
+      <Button variant="ghost" size="icon" className="cursor-pointer" onClick={() => setOpen(true)}>
         <Search className="h-5 w-5" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
