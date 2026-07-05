@@ -14,7 +14,7 @@ const ThemeToggle = () => {
   }, [mode]);
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => dispatch(toggleTheme())}>
+    <Button variant="ghost" size="icon" className="cursor-pointer" onClick={() => dispatch(toggleTheme())}>
       {mode === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </Button>
   );

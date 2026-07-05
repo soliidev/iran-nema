@@ -38,8 +38,8 @@ const AboutPage = () => {
               {stats.map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={stat.label} className="rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
-                    <Icon className="mx-auto h-10 w-10 text-primary" />
+                  <div key={stat.label} className="flex flex-col items-center rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
+                    <Icon className="h-10 w-10 text-primary" />
                     <h3 className="mt-4 text-3xl font-black">{stat.value}</h3>
                     <p className="mt-1 text-muted-foreground">{stat.label}</p>
                   </div>

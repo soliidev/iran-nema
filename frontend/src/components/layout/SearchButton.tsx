@@ -37,7 +37,7 @@ const SearchButton = () => {
 
   return (
     <>
-      <Button variant="ghost" size="icon" onClick={() => setOpen(true)}>
+      <Button variant="ghost" size="icon" className="cursor-pointer" onClick={() => setOpen(true)}>
         <Search className="h-5 w-5" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>

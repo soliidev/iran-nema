@@ -31,7 +31,7 @@ const UserMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
+        <Button variant="ghost" size="icon" className="cursor-pointer rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarFallback className="bg-primary text-primary-foreground text-sm">
               {user?.name?.charAt(0) || "U"}
@@ -41,13 +41,13 @@ const UserMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem asChild>
-          <Link to="/dashboard" className="flex items-center gap-2 cursor-pointer">
+          <Link to="/dashboard" className="flex flex-row-reverse items-center justify-between gap-2 cursor-pointer">
             <LayoutDashboard className="h-4 w-4" />
             داشبورد
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex items-center gap-2 text-destructive cursor-pointer">
+        <DropdownMenuItem className="flex flex-row-reverse items-center justify-between gap-2 text-destructive cursor-pointer">
           <LogOut className="h-4 w-4" />
           خروج
         </DropdownMenuItem>
