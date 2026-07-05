@@ -64,7 +64,7 @@ const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; t
           container: containerRef.current,
           panorama: activePanorama,
           caption: title,
-          defaultZoomLvl: 50,
+          defaultZoomLvl: 0,
           navbar: ["zoom", "move", "fullscreen"],
           loadingImg: undefined,
         });
