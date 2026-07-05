@@ -4,7 +4,6 @@ import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, C
 import { useState, useEffect } from "react";
 import { places } from "@/features/places/data/places";
 import { useNavigate } from "react-router-dom";
-import { SearchIcon } from "lucide-react";
 
 const SearchButton = () => {
   const [open, setOpen] = useState(false);

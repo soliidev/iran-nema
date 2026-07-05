@@ -1,14 +1,7 @@
 import Container from "@/components/layout/Container";
 import { Breadcrumb } from "@/components/common";
 import { Helmet } from "react-helmet-async";
-import { Landmark,Users,Award,Target } from "lucide-react";
-
-const stats = [
-  { icon: Landmark, value: "۱۵۰+", label: "جاذبه گردشگری" },
-  { icon: Users, value: "۱۰K+", label: "بازدیدکنندگان" },
-  { icon: Award, value: "۵+", label: "سال تجربه" },
-  { icon: Target, value: "۳۱", label: "استان تحت پوشش" },
-];
+import { stats } from "@/data/stats";
 
 const AboutPage = () => {
   return (

@@ -1,25 +1,6 @@
 import Container from "@/components/layout/Container";
-import StatisticCard from "./StatisticCard";
 import SectionTitle from "@/components/common/SectionTitle";
-
-const statistics = [
-    {
-        title: "مکان تاریخی",
-        value: "150+",
-    },
-    {
-        title: "تور مجازی",
-        value: "50+",
-    },
-    {
-        title: "شهر تحت پوشش",
-        value: "31",
-    },
-    {
-        title: "بازدید ماهانه",
-        value: "10K+",
-    },
-];
+import { stats } from "@/data/stats";
 
 const Statistics = () => {
     return (
@@ -31,13 +12,16 @@ const Statistics = () => {
                 />
 
                 <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-                    {statistics.map((item) => (
-                        <StatisticCard
-                            key={item.title}
-                            title={item.title}
-                            value={item.value}
-                        />
-                    ))}
+                    {stats.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                            <div key={item.label} className="flex flex-col items-center rounded-xl border p-6 text-center">
+                                <Icon className="h-8 w-8 text-primary" />
+                                <h3 className="mt-3 text-2xl font-bold">{item.value}</h3>
+                                <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
+                            </div>
+                        );
+                    })}
                 </div>
             </Container>
         </section>

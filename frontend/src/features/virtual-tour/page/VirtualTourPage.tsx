@@ -7,21 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
 import { Play } from "lucide-react";
 import TourViewer360 from "../components/TourViewer360";
-
-type PanoramaSection = {
-  id: number;
-  title: string;
-  image: string;
-};
-
-type Tour = {
-  id: number;
-  title: string;
-  location: string;
-  image: string;
-  panoramas?: PanoramaSection[];
-  duration: string;
-};
+import type { Tour } from "../types/tour";
 
 const tours: Tour[] = [
   {

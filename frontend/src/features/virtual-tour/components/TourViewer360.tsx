@@ -2,12 +2,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { Viewer } from "@photo-sphere-viewer/core";
 import "@photo-sphere-viewer/core/index.css";
 import { Loader2, AlertTriangle } from "lucide-react";
-
-type PanoramaSection = {
-  id: number;
-  title: string;
-  image: string;
-};
+import type { PanoramaSection } from "../types/tour";
 
 type Props = {
   image: string;
