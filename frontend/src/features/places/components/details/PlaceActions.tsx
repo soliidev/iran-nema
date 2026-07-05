@@ -21,10 +21,10 @@ export default function PlaceActions() {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center justify-between gap-3">
       <Button
         size="lg"
-        className="h-12 gap-2"
+        className="h-12 gap-2 cursor-pointer"
         onClick={() => navigate(`/virtual-tour?place=${id}`)}
       >
         <Eye className="h-5 w-5" />

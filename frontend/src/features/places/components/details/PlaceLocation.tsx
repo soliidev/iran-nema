@@ -1,71 +1,108 @@
 import { MapPin } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { usePlace } from "../../hooks/usePlace";
-import ClientOnly from "@/components/common/ClientOnly";
-import { useEffect, useRef } from "react";
-import Map from "ol/Map";
-import View from "ol/View";
-import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import { Style, Icon } from "ol/style";
-import { fromLonLat } from "ol/proj";
-import "ol/ol.css";
+import { useEffect, useRef, useState } from "react";
 
 export default function PlaceLocation() {
   const { id } = useParams();
   const place = usePlace(Number(id));
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<Map | null>(null);
+  const mapInstanceRef = useRef<unknown | null>(null);
+  const [mapError, setMapError] = useState(false);
 
   useEffect(() => {
     if (!place || !mapRef.current || mapInstanceRef.current) return;
 
-    const coordinates = fromLonLat([place.longitude, place.latitude]);
+    let cancelled = false;
+    let map: unknown = null;
 
-    const marker = new Feature({
-      geometry: new Point(coordinates),
-    });
+    const initMap = async () => {
+      try {
+        const [
+          { default: Map },
+          { default: View },
+          { default: TileLayer },
+          { default: OSM },
+          { default: Feature },
+          { default: Point },
+          { default: VectorLayer },
+          { default: VectorSource },
+          { Style, Icon },
+          { fromLonLat },
+          { default: FullScreen },
+          { default: Zoom },
+        ] = await Promise.all([
+          import("ol/Map"),
+          import("ol/View"),
+          import("ol/layer/Tile"),
+          import("ol/source/OSM"),
+          import("ol/Feature"),
+          import("ol/geom/Point"),
+          import("ol/layer/Vector"),
+          import("ol/source/Vector"),
+          import("ol/style"),
+          import("ol/proj"),
+          import("ol/control/FullScreen"),
+          import("ol/control/Zoom"),
+        ]);
 
-    marker.setStyle(
-      new Style({
-        image: new Icon({
-          src: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-          scale: 0.5,
-          anchor: [0.5, 1],
-        }),
-      }),
-    );
+        if (cancelled || !mapRef.current) return;
 
-    const vectorSource = new VectorSource({
-      features: [marker],
-    });
+        const coordinates = fromLonLat([place.longitude, place.latitude]);
 
-    const vectorLayer = new VectorLayer({
-      source: vectorSource,
-    });
+        const marker = new Feature({
+          geometry: new Point(coordinates),
+        });
 
-    const map = new Map({
-      target: mapRef.current,
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-        vectorLayer,
-      ],
-      view: new View({
-        center: coordinates,
-        zoom: 13,
-      }),
-    });
+        marker.setStyle(
+          new Style({
+            image: new Icon({
+              src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f766e' width='48' height='48'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
+              scale: 1.2,
+              anchor: [0.5, 1],
+            }),
+          }),
+        );
 
-    mapInstanceRef.current = map;
+        const vectorSource = new VectorSource({
+          features: [marker],
+        });
+
+        const vectorLayer = new VectorLayer({
+          source: vectorSource,
+        });
+
+        map = new Map({
+          target: mapRef.current,
+          controls: [new FullScreen(), new Zoom()],
+          layers: [
+            new TileLayer({
+              source: new OSM({
+                attributions: [],
+              }),
+            }),
+            vectorLayer,
+          ],
+          view: new View({
+            center: coordinates,
+            zoom: 15,
+          }),
+        });
+
+        mapInstanceRef.current = map;
+      } catch (err) {
+        console.error("Map init error:", err);
+        if (!cancelled) setMapError(true);
+      }
+    };
+
+    initMap();
 
     return () => {
-      map.setTarget(undefined);
+      cancelled = true;
+      if (map && typeof map === "object" && "setTarget" in map) {
+        (map as { setTarget: (t: undefined) => void }).setTarget(undefined);
+      }
       mapInstanceRef.current = null;
     };
   }, [place]);
@@ -79,9 +116,16 @@ export default function PlaceLocation() {
         <MapPin className="h-5 w-5 shrink-0 text-primary" />
         <span>{place.city}، {place.province}</span>
       </div>
-      <ClientOnly>
-        <div ref={mapRef} className="h-64 w-full overflow-hidden rounded-2xl" />
-      </ClientOnly>
+      {mapError ? (
+        <div className="flex h-64 w-full items-center justify-center rounded-2xl bg-muted">
+          <p className="text-muted-foreground">خطا در بارگذاری نقشه</p>
+        </div>
+      ) : (
+        <div
+          ref={mapRef}
+          style={{ height: "256px", width: "100%", borderRadius: "1rem" }}
+        />
+      )}
     </div>
   );
 }

@@ -33,4 +33,7 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  optimizeDeps: {
+    include: ["ol", "ol/Map", "ol/View", "ol/layer/Tile", "ol/source/OSM"],
+  },
 });
