@@ -4,9 +4,10 @@ import PlaceSearch from "../components/PlaceSearch";
 import PlaceFilter from "../components/PlaceFilter";
 import PlacePagination from "../components/PlacePagination";
 import { Breadcrumb } from "@/components/common";
-import { places } from "../data/places";
 import { useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
+import { usePlaces } from "../hooks/usePlace";
+import { Loader2, MapIcon } from "lucide-react";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -14,6 +15,7 @@ export default function PlacesPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [page, setPage] = useState(1);
+  const { data: places = [], isLoading } = usePlaces();
 
   const filtered = useMemo(() => {
     return places.filter((p) => {
@@ -25,7 +27,7 @@ export default function PlacesPage() {
       const matchesCategory = category === "all" || p.category === category;
       return matchesSearch && matchesCategory;
     });
-  }, [search, category]);
+  }, [search, category, places]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
@@ -33,7 +35,7 @@ export default function PlacesPage() {
   const categories = useMemo(() => {
     const cats = [...new Set(places.map((p) => p.category))];
     return ["all", ...cats];
-  }, []);
+  }, [places]);
 
   return (
     <>
@@ -58,9 +60,27 @@ export default function PlacesPage() {
             <PlaceFilter value={category} onChange={setCategory} categories={categories} />
           </div>
 
-          <PlaceGrid places={paginated} />
+          {isLoading ? (
+            <div className="flex min-h-[40vh] items-center justify-center">
+              <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            </div>
+          ) : paginated.length === 0 ? (
+            <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4 text-center">
+              <MapIcon className="h-16 w-16 text-muted-foreground/40" />
+              <h3 className="text-xl font-bold">هیچ مکانی یافت نشد</h3>
+              <p className="text-muted-foreground">
+                {search || category !== "all"
+                  ? "مکان مورد نظر با فیلترهای انتخاب شده وجود ندارد"
+                  : "هنوز هیچ مکانی به سامانه اضافه نشده است"}
+              </p>
+            </div>
+          ) : (
+            <PlaceGrid places={paginated} />
+          )}
 
-          <PlacePagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          {paginated.length > 0 && (
+            <PlacePagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          )}
         </Container>
       </section>
     </>

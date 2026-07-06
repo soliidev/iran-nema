@@ -2,13 +2,14 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { useState, useEffect } from "react";
-import { places } from "@/features/places/data/places";
 import { useNavigate } from "react-router-dom";
+import { usePlaces } from "@/features/places/hooks/usePlace";
 
 const SearchButton = () => {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const { data: places = [] } = usePlaces();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

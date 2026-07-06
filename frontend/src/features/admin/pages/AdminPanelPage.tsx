@@ -6,12 +6,11 @@ import { Users, MapPin, Layers, Image, BarChart3, Settings } from "lucide-react"
 import { Link } from "react-router-dom";
 
 const sections = [
-  { icon: Users, label: "مدیریت کاربران", href: "/admin/users", desc: "مدیریت کاربران سیستم", color: "text-blue-500" },
-  { icon: MapPin, label: "مدیریت مکان‌ها", href: "/admin/places", desc: "افزودن و ویرایش مکان‌ها", color: "text-green-500" },
-  { icon: Layers, label: "دسته‌بندی‌ها", href: "/admin/categories", desc: "مدیریت دسته‌بندی‌ها", color: "text-purple-500" },
-  { icon: Image, label: "گالری تصاویر", href: "/admin/gallery", desc: "مدیریت تصاویر", color: "text-pink-500" },
-  { icon: BarChart3, label: "آمار", href: "/admin/statistics", desc: "گزارشات و آمار", color: "text-orange-500" },
-  { icon: Settings, label: "تنظیمات", href: "/admin/settings", desc: "تنظیمات سایت", color: "text-gray-500" },
+  { icon: MapPin, label: "مدیریت مکان‌ها", href: "/dashboard/places", desc: "افزودن و ویرایش مکان‌ها", color: "text-green-500" },
+  { icon: Layers, label: "دسته‌بندی‌ها", href: "/dashboard/categories", desc: "مدیریت دسته‌بندی‌ها", color: "text-purple-500" },
+  { icon: Image, label: "گالری تصاویر", href: "/dashboard/places", desc: "مدیریت تصاویر", color: "text-pink-500" },
+  { icon: BarChart3, label: "آمار", href: "/dashboard", desc: "گزارشات و آمار", color: "text-orange-500" },
+  { icon: Settings, label: "تنظیمات", href: "/dashboard/settings", desc: "تنظیمات سایت", color: "text-gray-500" },
 ];
 
 const AdminPanelPage = () => {

@@ -1,17 +1,21 @@
 import { MapPin } from "lucide-react";
-import { useParams } from "react-router-dom";
-import { usePlace } from "../../hooks/usePlace";
 import { useEffect, useRef, useState } from "react";
 
-export default function PlaceLocation() {
-  const { id } = useParams();
-  const place = usePlace(Number(id));
+type Props = {
+  latitude: number;
+  longitude: number;
+  city: string;
+  province: string;
+};
+
+export default function PlaceLocation({ latitude, longitude, city, province }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<unknown | null>(null);
   const [mapError, setMapError] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
-    if (!place || !mapRef.current || mapInstanceRef.current) return;
+    if (!mapRef.current || mapInstanceRef.current) return;
 
     let cancelled = false;
     let map: unknown = null;
@@ -48,7 +52,7 @@ export default function PlaceLocation() {
 
         if (cancelled || !mapRef.current) return;
 
-        const coordinates = fromLonLat([place.longitude, place.latitude]);
+        const coordinates = fromLonLat([longitude, latitude]);
 
         const marker = new Feature({
           geometry: new Point(coordinates),
@@ -90,6 +94,7 @@ export default function PlaceLocation() {
         });
 
         mapInstanceRef.current = map;
+        if (!cancelled) setMapReady(true);
       } catch (err) {
         console.error("Map init error:", err);
         if (!cancelled) setMapError(true);
@@ -105,16 +110,14 @@ export default function PlaceLocation() {
       }
       mapInstanceRef.current = null;
     };
-  }, [place]);
-
-  if (!place) return null;
+  }, [latitude, longitude]);
 
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-semibold">موقعیت مکانی</h3>
       <div className="flex items-center gap-3 text-muted-foreground">
         <MapPin className="h-5 w-5 shrink-0 text-primary" />
-        <span>{place.city}، {place.province}</span>
+        <span>{city}، {province}</span>
       </div>
       {mapError ? (
         <div className="flex h-64 w-full items-center justify-center rounded-2xl bg-muted">
