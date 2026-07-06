@@ -1,9 +1,19 @@
 import Container from "@/components/layout/Container";
 import { Breadcrumb } from "@/components/common";
 import { Helmet } from "react-helmet-async";
-import { stats } from "@/data/stats";
+import { usePlaceStatistics } from "@/features/places/hooks/usePlacesQuery";
+import { Landmark, Users, Award, Target } from "lucide-react";
+
+const statItems = [
+  { icon: Landmark, label: "جاذبه گردشگری", key: "total_places" as const },
+  { icon: Users, value: "۱۰K+", label: "بازدیدکنندگان", key: null as const },
+  { icon: Award, label: "استان تحت پوشش", key: "provinces_count" as const },
+  { icon: Target, label: "دسته‌بندی", key: "categories_count" as const },
+];
 
 const AboutPage = () => {
+  const { data: apiStats } = usePlaceStatistics();
+
   return (
     <>
       <Helmet>
@@ -28,14 +38,15 @@ const AboutPage = () => {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-6">
-              {stats.map((stat) => {
+              {statItems.map((stat) => {
                 const Icon = stat.icon;
+                const val = stat.key ? `${apiStats?.[stat.key] ?? 0}` : stat.value;
                 return (
                   <div key={stat.label} className="flex flex-col items-center rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
                     <div className="flex items-center justify-center">
                       <Icon className="h-10 w-10 text-primary" />
                     </div>
-                    <h3 className="mt-4 text-3xl font-black">{stat.value}</h3>
+                    <h3 className="mt-4 text-3xl font-black">{val}</h3>
                     <p className="mt-1 text-muted-foreground">{stat.label}</p>
                   </div>
                 );

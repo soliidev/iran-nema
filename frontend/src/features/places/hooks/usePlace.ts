@@ -1,18 +1,39 @@
-import { places } from "../data/places";
-import type { Place } from "../types/place";
+import { useQuery } from "@tanstack/react-query";
+import { placeService } from "@/services/place.service";
+import type { Place, ApiPlace } from "../types/place";
+import { mapApiPlaceToPlace } from "../types/place";
 
-export function usePlace(id: number): Place | undefined {
-  return places.find((item) => item.id === id);
+export function usePlace(id: number) {
+  return useQuery({
+    queryKey: ["places", "detail", id],
+    queryFn: async () => {
+      const { data: res } = await placeService.getById(id);
+      const apiPlace = (res.data ?? res) as ApiPlace;
+      return mapApiPlaceToPlace(apiPlace);
+    },
+    enabled: !!id,
+  });
 }
 
-export function usePlaces(): Place[] {
-  return places;
+export function usePlaces() {
+  return useQuery({
+    queryKey: ["places"],
+    queryFn: async () => {
+      const { data: res } = await placeService.getAll({ per_page: 50 });
+      const apiPlaces = (res.data ?? res) as ApiPlace[];
+      return apiPlaces.map(mapApiPlaceToPlace);
+    },
+  });
 }
 
-export function useRelatedPlaces(currentId: number, limit = 3): Place[] {
-  const current = usePlace(currentId);
-  if (!current) return [];
-  return places
-    .filter((p) => p.id !== currentId && p.category === current.category)
-    .slice(0, limit);
+export function useRelatedPlaces(currentId: number, limit = 3) {
+  return useQuery({
+    queryKey: ["places", "related", currentId],
+    queryFn: async () => {
+      const { data: res } = await placeService.getRelated(currentId);
+      const apiPlaces = (res.data ?? res) as ApiPlace[];
+      return apiPlaces.map(mapApiPlaceToPlace).slice(0, limit);
+    },
+    enabled: !!currentId,
+  });
 }

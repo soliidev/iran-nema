@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('code')->comment('کد');
+            $table->string('title')->comment('عنوان');
+            $table->text('description')->nullable()->comment('توضیحات');
+            $table->string('icon')->nullable()->comment('آیکون دسته‌بندی (نام کلاس FontAwesome یا مسیر SVG)');
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->unique(['code', 'deleted_at']);
+            $table->unique(['title', 'deleted_at']);
+
+            $table->comment('دسته بندی ها');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('categories');
+    }
+};

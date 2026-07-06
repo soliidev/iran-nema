@@ -9,5 +9,4 @@ export { default as PlaceLocation } from "./components/details/PlaceLocation";
 export { default as PlaceActions } from "./components/details/PlaceActions";
 export { default as PlacesPage } from "./pages/PlacesPage";
 export { default as PlaceDetailsPage } from "./pages/PlaceDetailsPage";
-export { places } from "./data/places";
 export type { Place } from "./types/place";
