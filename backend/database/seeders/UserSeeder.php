@@ -12,7 +12,9 @@ class UserSeeder extends Seeder
         User::create([
             'username' => 'solii',
             'email' => 'abolfazl.soltani313131@gmail.com',
+            'email_verified_at' => now(),
             'password' => 'password',
+            'is_admin' => true,
         ]);
     }
 }

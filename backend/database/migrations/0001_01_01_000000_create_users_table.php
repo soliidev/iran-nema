@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('username')->comment('نام کاربری');
             $table->string('email')->comment('ایمیل');
             $table->timestamp('email_verified_at')->nullable()->comment('زمان تایید ایمیل');
+            $table->boolean('is_admin')->default(false)->comment('مدیر سیستم');
             $table->string('password')->comment('گذرواژه');
             $table->rememberToken();
 
