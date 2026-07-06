@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import MainLayout from "@/layouts/MainLayout";
-import DashboardLayout from "@/layouts/DashboardLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 import { createBrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "@/components/common";
@@ -15,8 +14,13 @@ const ContactPage = lazy(() => import("@/features/contact/pages/ContactPage"));
 const NotFoundPage = lazy(() => import("@/features/not-found/pages/NotFoundPage"));
 const LoginPage = lazy(() => import("@/features/auth/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/features/auth/pages/RegisterPage"));
-const DashboardPage = lazy(() => import("@/features/dashboard/pages/DashboardPage"));
 const AdminPanelPage = lazy(() => import("@/features/admin/pages/AdminPanelPage"));
+const CategoriesListPage = lazy(() => import("@/features/admin/pages/CategoriesListPage"));
+const CategoryFormPage = lazy(() => import("@/features/admin/pages/CategoryFormPage"));
+const PlacesListPage = lazy(() => import("@/features/admin/pages/PlacesListPage"));
+const PlaceFormPage = lazy(() => import("@/features/admin/pages/PlaceFormPage"));
+const PlaceImagesPage = lazy(() => import("@/features/admin/pages/PlaceImagesPage"));
+const FavoritesPage = lazy(() => import("@/features/favorites/pages/FavoritesPage"));
 
 const PageLoader = () => (
   <div className="space-y-4 p-8">
@@ -47,22 +51,22 @@ export const router = createBrowserRouter([
       { path: "contact", element: <ErrorBoundary>{withSuspense(ContactPage)}</ErrorBoundary> },
       { path: "login", element: <ErrorBoundary>{withSuspense(LoginPage)}</ErrorBoundary> },
       { path: "register", element: <ErrorBoundary>{withSuspense(RegisterPage)}</ErrorBoundary> },
+      { path: "favorites", element: <ErrorBoundary>{withSuspense(FavoritesPage)}</ErrorBoundary> },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
-    errorElement: withSuspense(NotFoundPage),
-    children: [
-      { index: true, element: <ErrorBoundary>{withSuspense(DashboardPage)}</ErrorBoundary> },
-    ],
-  },
-  {
-    path: "/admin",
     element: <AdminLayout />,
     errorElement: withSuspense(NotFoundPage),
     children: [
       { index: true, element: <ErrorBoundary>{withSuspense(AdminPanelPage)}</ErrorBoundary> },
+      { path: "categories", element: <ErrorBoundary>{withSuspense(CategoriesListPage)}</ErrorBoundary> },
+      { path: "categories/new", element: <ErrorBoundary>{withSuspense(CategoryFormPage)}</ErrorBoundary> },
+      { path: "categories/:id/edit", element: <ErrorBoundary>{withSuspense(CategoryFormPage)}</ErrorBoundary> },
+      { path: "places", element: <ErrorBoundary>{withSuspense(PlacesListPage)}</ErrorBoundary> },
+      { path: "places/new", element: <ErrorBoundary>{withSuspense(PlaceFormPage)}</ErrorBoundary> },
+      { path: "places/:id/edit", element: <ErrorBoundary>{withSuspense(PlaceFormPage)}</ErrorBoundary> },
+      { path: "places/:id/images", element: <ErrorBoundary>{withSuspense(PlaceImagesPage)}</ErrorBoundary> },
     ],
   },
 ]);

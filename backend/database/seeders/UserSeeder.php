@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
             'username' => 'solii',
             'email' => 'abolfazl.soltani313131@gmail.com',
             'email_verified_at' => now(),
-            'password' => 'password',
+            'password' => 'abs13848413',
             'is_admin' => true,
         ]);
     }

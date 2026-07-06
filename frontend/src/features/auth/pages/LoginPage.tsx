@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { LogIn, Eye, EyeOff } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useAppDispatch } from "@/store/hooks";
-import { loginSuccess } from "@/store/slices/authSlice";
+import { loginStart, loginSuccess, loginFailure } from "@/store/slices/authSlice";
 import { toast } from "sonner";
 import Container from "@/components/layout/Container";
+import api from "@/services/axios";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,10 +22,16 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    dispatch(loginStart());
     try {
-      dispatch(loginSuccess({ user: { id: 1, name: "کاربر", email, role: "user" }, token: "demo-token" }));
+      const { data } = await api.post("/auth/login", { email, password });
+      dispatch(loginSuccess({ user: data.user, token: data.token }));
       toast.success("با موفقیت وارد شدید");
-      navigate("/dashboard");
+      navigate(data.user.is_admin ? "/admin" : "/dashboard");
+    } catch (err: unknown) {
+      dispatch(loginFailure());
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message || "خطا در ورود";
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }

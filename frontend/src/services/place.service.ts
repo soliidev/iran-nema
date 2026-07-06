@@ -24,4 +24,7 @@ export const placeService = {
 
   getStatistics: () =>
     api.get("/statistics"),
+
+  getImages: (id: number) =>
+    api.get(`/places/${id}/images`),
 };

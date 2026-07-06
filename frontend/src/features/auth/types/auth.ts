@@ -4,19 +4,23 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-  name: string;
+  username: string;
   email: string;
   password: string;
   password_confirmation: string;
 }
 
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  is_admin: boolean;
+  email_verified_at?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface AuthResponse {
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    role: "user" | "admin";
-    avatar?: string;
-  };
+  user: User;
   token: string;
 }

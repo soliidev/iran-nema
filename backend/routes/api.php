@@ -1,11 +1,19 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\PlaceController;
 use App\Http\Controllers\Api\PlaceImageController;
+use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\VirtualTourImageController;
 use Illuminate\Support\Facades\Route;
+
+Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/register', [AuthController::class, 'register']);
+Route::get('auth/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+
+Route::get('provinces', [ProvinceController::class, 'index']);
 
 Route::get('statistics', [PlaceController::class, 'statistics']);
 
