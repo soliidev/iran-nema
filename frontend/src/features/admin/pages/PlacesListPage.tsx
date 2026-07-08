@@ -56,7 +56,7 @@ const PlacesListPage = () => {
           <h1 className="text-3xl font-black">مکان‌ها</h1>
           <p className="text-muted-foreground">مدیریت جاذبه‌های گردشگری</p>
         </div>
-        <Button onClick={() => navigate("/admin/places/new")}>
+        <Button onClick={() => navigate("/dashboard/places/new")}>
           <Plus className="ml-2 h-4 w-4" />
           مکان جدید
         </Button>
@@ -94,10 +94,10 @@ const PlacesListPage = () => {
                     <TableCell>{p.rating}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="icon" onClick={() => navigate(`/admin/places/${p.id}/edit`)}>
+                        <Button variant="ghost" size="icon" onClick={() => navigate(`/dashboard/places/${p.id}/edit`)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => navigate(`/admin/places/${p.id}/images`)}>
+                        <Button variant="ghost" size="icon" onClick={() => navigate(`/dashboard/places/${p.id}/images`)}>
                           <Image className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon" className="text-red-500" onClick={() => handleDelete(p.id)}>

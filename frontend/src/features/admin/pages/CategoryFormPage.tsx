@@ -51,7 +51,7 @@ const CategoryFormPage = () => {
         await adminService.createCategory({ code, title, description, icon });
         toast.success("دسته‌بندی ایجاد شد");
       }
-      navigate("/admin/categories");
+      navigate("/dashboard/categories");
     } catch {
       toast.error("خطا در ذخیره دسته‌بندی");
     } finally {

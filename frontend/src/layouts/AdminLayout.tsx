@@ -34,7 +34,6 @@ const AdminLayout = () => {
       <aside className="flex w-64 flex-col border-l bg-card p-4">
         <div className="mb-8 px-3">
           <h2 className="text-xl font-black">پنل مدیریت</h2>
-          <p className="text-sm text-muted-foreground">{user.username}</p>
         </div>
         <nav className="flex-1 space-y-1">
           {sidebarLinks.map((link) => {
@@ -42,9 +41,11 @@ const AdminLayout = () => {
             const isActive = location.pathname === link.href || location.pathname.startsWith(link.href + "/");
             return (
               <Link key={link.href} to={link.href}>
-                <Button variant={isActive ? "default" : "ghost"} className="w-full justify-start gap-3" size="sm">
+                <Button variant={isActive ? "default" : "ghost"} className="w-full justify-start gap-3 px-4 py-6" size="sm">
                   <Icon className="h-4 w-4" />
-                  {link.label}
+                  {link.label}بین سلول ها یک خط بیفته در گرید دسته بندی که مشخص باشه
+                  همچنین مدال وسط صفحه باز نمیشه و میفته پایین
+                  دکمه دسته بندی جدید هم میخوام سمت راست باشه
                 </Button>
               </Link>
             );
