@@ -96,7 +96,7 @@ const PlaceImagesPage = () => {
           </Button>
           <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
         </label>
-        <Button variant="ghost" className="mr-3" onClick={() => navigate("/admin/places")}>
+        <Button variant="ghost" className="mr-3" onClick={() => navigate("/dashboard/places")}>
           بازگشت
         </Button>
       </div>

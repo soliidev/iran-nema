@@ -89,7 +89,7 @@ const PlaceFormPage = () => {
         await adminService.createPlace(data);
         toast.success("مکان ایجاد شد");
       }
-      navigate("/admin/places");
+      navigate("/dashboard/places");
     } catch {
       toast.error("خطا در ذخیره مکان");
     } finally {

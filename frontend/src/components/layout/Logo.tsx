@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-const Logo = () => {
+const Logo = ({ className = "h-14 w-auto" }: { className?: string }) => {
   return (
     <Link to="/">
       <img
         src="/images/logo.png"
         alt="ایران‌نما"
-        className="h-14 w-auto"
+        className={`${className} dark:invert`}
       />
     </Link>
   );
