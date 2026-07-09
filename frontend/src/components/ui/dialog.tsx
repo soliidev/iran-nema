@@ -58,26 +58,23 @@ function DialogContent({
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
-        className={cn(
-          "fixed inset-0 z-50 flex w-full items-center justify-center p-4 outline-none",
-          className
-        )}
+        className="fixed inset-0 z-50 grid place-items-center p-4 outline-none"
         {...props}
       >
-        <div className="relative z-50 grid w-full max-w-[calc(100%-2rem)] gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-none sm:max-w-md">
+        <div className={cn("relative z-50 grid w-full max-w-md gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-none", className)}>
           {children}
-          {showCloseButton && (
-            <DialogPrimitive.Close data-slot="dialog-close" asChild>
-              <Button
-                variant="ghost"
-                className="absolute top-2 right-2"
-                size="icon-sm"
-              >
-                <XIcon />
-                <span className="sr-only">Close</span>
-              </Button>
-            </DialogPrimitive.Close>
-          )}
+        {showCloseButton && (
+          <DialogPrimitive.Close data-slot="dialog-close" asChild>
+            <Button
+              variant="ghost"
+              className="absolute top-2 left-2"
+              size="icon-sm"
+            >
+              <XIcon />
+              <span className="sr-only">بستن</span>
+            </Button>
+          </DialogPrimitive.Close>
+        )}
         </div>
       </DialogPrimitive.Content>
     </DialogPortal>

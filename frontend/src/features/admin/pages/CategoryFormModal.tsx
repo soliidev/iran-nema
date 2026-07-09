@@ -1,5 +1,5 @@
 import { useState, useEffect, type FormEvent } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -76,9 +76,6 @@ const CategoryFormModal = ({ isOpen, onClose, categoryId, onSuccess }: CategoryF
       <DialogContent showCloseButton={false} className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{isEdit ? "ویرایش دسته‌بندی" : "دسته‌بندی جدید"}</DialogTitle>
-          <DialogDescription>
-            {isEdit ? "اطلاعات دسته‌بندی را ویرایش کنید" : "دسته‌بندی جدید را ایجاد کنید"}
-          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -99,11 +96,11 @@ const CategoryFormModal = ({ isOpen, onClose, categoryId, onSuccess }: CategoryF
           </div>
           <DialogFooter>
             <div className="flex gap-2 w-full justify-end">
-              <Button type="button" variant="outline" onClick={onClose} disabled={saving}>
-                انصراف
-              </Button>
               <Button type="submit" disabled={saving}>
                 {saving ? "در حال ذخیره..." : isEdit ? "ویرایش" : "ایجاد"}
+              </Button>
+              <Button type="button" variant="outline" onClick={onClose} disabled={saving}>
+                انصراف
               </Button>
             </div>
           </DialogFooter>
