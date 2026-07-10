@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFavoriteRequest;
-use App\Http\Resources\FavoriteResource;
 use App\Services\FavoriteService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class FavoriteController extends Controller
 {
@@ -16,11 +14,69 @@ class FavoriteController extends Controller
         private readonly FavoriteService $favoriteService
     ) {}
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): JsonResponse
     {
         $userId = $request->user()->id;
         $favorites = $this->favoriteService->getByUser($userId, $request->get('per_page', 15));
-        return FavoriteResource::collection($favorites);
+
+        // Transform to include place details
+        $items = $favorites->getCollection()->transform(function ($fav) {
+            $place = $fav->place;
+            $primaryImage = $place?->primaryImage;
+
+            $placeData = null;
+            if ($place) {
+                $primaryImageData = null;
+                if ($primaryImage) {
+                    $primaryImageData = [
+                        'image_path' => $primaryImage->image_path,
+                        'image_url' => $primaryImage->image_path
+                            ? \Illuminate\Support\Facades\Storage::disk('public')->url($primaryImage->image_path)
+                            : null,
+                        'alt_text' => $primaryImage->alt_text,
+                    ];
+                }
+
+                $categoryData = null;
+                if ($place->category) {
+                    $categoryData = [
+                        'id' => $place->category->id,
+                        'title' => $place->category->title,
+                        'icon' => $place->category->icon,
+                    ];
+                }
+
+                $provinceData = null;
+                if ($place->province) {
+                    $provinceData = [
+                        'id' => $place->province->id,
+                        'name' => $place->province->name,
+                    ];
+                }
+
+                $placeData = [
+                    'id' => $place->id,
+                    'code' => $place->code,
+                    'title' => $place->title,
+                    'latitude' => $place->latitude,
+                    'longitude' => $place->longitude,
+                    'category' => $categoryData,
+                    'province' => $provinceData,
+                    'rating' => $place->rating,
+                    'primary_image' => $primaryImageData,
+                ];
+            }
+
+            return [
+                'id' => $fav->id,
+                'user_id' => $fav->user_id,
+                'place_id' => $fav->place_id,
+                'place' => $placeData,
+                'created_at' => $fav->created_at,
+            ];
+        })->values();
+
+        return response()->json(['data' => $items]);
     }
 
     public function store(StoreFavoriteRequest $request): JsonResponse
