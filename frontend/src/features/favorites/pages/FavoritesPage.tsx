@@ -14,7 +14,7 @@ interface Place {
   id: number;
   title: string;
   province?: { id: number; name: string };
-  primary_image?: { image_path: string };
+  primary_image?: { image_path: string; image_url?: string };
 }
 
 interface FavoriteItem {
@@ -79,7 +79,7 @@ const FavoritesPage = () => {
                   <CardContent className="p-4">
                     <Link to={`/places/${item.place.id}`}>
                       <img
-                        src={item.place.primary_image?.image_path || ""}
+                        src={item.place.primary_image?.image_url || item.place.primary_image?.image_path || ""}
                         alt={item.place.title}
                         className="mb-3 h-40 w-full rounded-lg object-cover"
                       />

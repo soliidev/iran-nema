@@ -21,11 +21,11 @@ const VirtualTourPage = () => {
     id: p.id,
     title: p.title,
     location: p.city || p.province || "",
-    image: p.primary_image?.image_path || "",
+    image: p.primary_image?.image_url || p.primary_image?.image_path || "",
     panoramas: (p.virtual_tour_images || []).map((img) => ({
       id: img.id,
       title: img.title,
-      image: img.image_path,
+      image: img.image_url || img.image_path,
     })),
     duration: `${p.virtual_tour_images?.length || 1} بخش`,
   }));
@@ -46,7 +46,7 @@ const VirtualTourPage = () => {
         const images = data.data ?? data;
         if (Array.isArray(images) && images.length) {
           setTourPanoramas(
-            images.map((img) => ({ id: img.id, title: img.title, image: img.image_path }))
+            images.map((img) => ({ id: img.id, title: img.title, image: img.image_url || img.image_path }))
           );
         }
       }).catch(() => {});
