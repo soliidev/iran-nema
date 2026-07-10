@@ -12,7 +12,7 @@ export const adminService = {
   deletePlace: (id: number) => api.delete(`/places/${id}`),
 
   uploadImage: (placeId: number, formData: FormData) =>
-    api.post(`/places/${placeId}/images`, formData, {
+    api.post(`/places/${placeId}/images/upload`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
   deleteImage: (placeId: number, imageId: number) =>
@@ -21,7 +21,7 @@ export const adminService = {
     api.post(`/places/${placeId}/images/${imageId}/primary`),
 
   uploadVirtualTour: (placeId: number, formData: FormData) =>
-    api.post(`/places/${placeId}/virtual-tour`, formData, {
+    api.post(`/places/${placeId}/virtual-tour/upload`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
   deleteVirtualTour: (placeId: number, tourId: number) =>

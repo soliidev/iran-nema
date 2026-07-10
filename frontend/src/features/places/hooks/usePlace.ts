@@ -8,7 +8,7 @@ export function usePlace(id: number) {
     queryKey: ["places", "detail", id],
     queryFn: async () => {
       const { data: res } = await placeService.getById(id);
-      const apiPlace = (res.data ?? res) as ApiPlace;
+      const apiPlace = (res.data.data ?? res.data) as ApiPlace;
       return mapApiPlaceToPlace(apiPlace);
     },
     enabled: !!id,
@@ -20,7 +20,7 @@ export function usePlaces() {
     queryKey: ["places"],
     queryFn: async () => {
       const { data: res } = await placeService.getAll({ per_page: 50 });
-      const apiPlaces = (res.data ?? res) as ApiPlace[];
+      const apiPlaces = (res.data.data ?? res.data) as ApiPlace[];
       return apiPlaces.map(mapApiPlaceToPlace);
     },
   });
@@ -31,7 +31,7 @@ export function useRelatedPlaces(currentId: number, limit = 3) {
     queryKey: ["places", "related", currentId],
     queryFn: async () => {
       const { data: res } = await placeService.getRelated(currentId);
-      const apiPlaces = (res.data ?? res) as ApiPlace[];
+      const apiPlaces = (res.data.data ?? res.data) as ApiPlace[];
       return apiPlaces.map(mapApiPlaceToPlace).slice(0, limit);
     },
     enabled: !!currentId,

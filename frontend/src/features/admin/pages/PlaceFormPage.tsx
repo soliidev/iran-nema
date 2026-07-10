@@ -52,7 +52,7 @@ const PlaceFormPage = () => {
     (async () => {
       try {
         const { data: res } = await placeService.getById(Number(id));
-        const p = res.data ?? res;
+        const p = res.data;
         setCategoryId(String(p.category_id));
         setProvinceId(String(p.province_id));
         setCode(p.code);

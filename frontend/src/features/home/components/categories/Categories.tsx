@@ -1,7 +1,7 @@
 import Container from "@/components/layout/Container";
 import CategoryCard from "./CategoryCard";
 import { useCategories } from "@/features/home/hooks/useCategories";
-import { Loader2, Landmark, Trees, Building2, Mountain, Waves, Church } from "lucide-react";
+import { Landmark, Trees, Building2, Mountain, Waves, Church } from "lucide-react";
 import type { ElementType } from "react";
 
 const iconMap: Record<string, ElementType> = {
