@@ -4,52 +4,56 @@ namespace App\Repositories;
 
 use App\Models\Place;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class PlaceRepository
 {
     public function getAll(array $filters = [], int $perPage = 15): LengthAwarePaginator
     {
-        return Place::query()
-            ->with(['category', 'province', 'primaryImage'])
-            ->when(isset($filters['category_id']), fn($q) => $q->where('category_id', $filters['category_id']))
-            ->when(isset($filters['province_id']), fn($q) => $q->where('province_id', $filters['province_id']))
-            ->when(isset($filters['search']), fn($q) => $q->where(function($query) use ($filters) {
-                $query->where('title', 'like', "%{$filters['search']}%")
-                    ->orWhere('description', 'like', "%{$filters['search']}%");
-            }))
+        return $this->baseQuery($filters)
             ->latest()
             ->paginate($perPage);
     }
 
     public function findById(int $id, array $relations = []): ?Place
     {
-        return Place::with($relations)->find($id);
+        $query = $this->baseQuery();
+        
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+        
+        return $query->find($id);
     }
 
     public function findByCode(string $code, array $relations = []): ?Place
     {
-        return Place::with($relations)->where('code', $code)->first();
+        $query = $this->baseQuery();
+        
+        if (!empty($relations)) {
+            $query->with($relations);
+        }
+        
+        return $query->where('code', $code)->first();
     }
 
     public function getByCategory(int $categoryId, int $perPage = 15): LengthAwarePaginator
     {
-        return Place::with(['category', 'province', 'primaryImage'])
-            ->where('category_id', $categoryId)
+        return $this->baseQuery(['category_id' => $categoryId])
             ->latest()
             ->paginate($perPage);
     }
 
     public function getByProvince(int $provinceId, int $perPage = 15): LengthAwarePaginator
     {
-        return Place::with(['category', 'province', 'primaryImage'])
-            ->where('province_id', $provinceId)
+        return $this->baseQuery(['province_id' => $provinceId])
             ->latest()
             ->paginate($perPage);
     }
 
     public function search(string $query, int $perPage = 15): LengthAwarePaginator
     {
-        return $this->getAll(['search' => $query], $perPage);
+        return $this->baseQuery(['search' => $query], $perPage);
     }
 
     public function create(array $data): Place
@@ -78,9 +82,10 @@ class PlaceRepository
             return new \Illuminate\Pagination\LengthAwarePaginator([], 0, $limit);
         }
 
-        return Place::with(['category', 'province', 'primaryImage'])
-            ->where('category_id', $place->category_id)
-            ->where('id', '!=', $placeId)
+        return $this->baseQuery([
+            'category_id' => $place->category_id,
+            'exclude_id' => $placeId,
+        ])
             ->inRandomOrder()
             ->paginate($limit);
     }
@@ -92,5 +97,48 @@ class PlaceRepository
             'provinces_count' => \App\Models\Province::count(),
             'categories_count' => \App\Models\Category::count(),
         ];
+    }
+
+    private function baseQuery(array $filters = [], int $perPage = 15): \Illuminate\Database\Eloquent\Builder
+    {
+        $query = Place::query()
+            ->select([
+                'places.*',
+                'categories.title as category_title',
+                'categories.code as category_code',
+                'categories.icon as category_icon',
+                'provinces.name as province_name',
+                'provinces.code as province_code',
+                'primary_images.image_path as primary_image_path',
+                'primary_images.alt_text as primary_image_alt',
+            ])
+            ->leftJoin('categories', 'places.category_id', '=', 'categories.id')
+            ->leftJoin('provinces', 'places.province_id', '=', 'provinces.id')
+            ->leftJoin('place_images as primary_images', function ($join) {
+                $join->on('places.id', '=', 'primary_images.place_id')
+                     ->where('primary_images.is_primary', true);
+            })
+            ->with(['primaryImage', 'virtualTourImages']);
+
+        if (isset($filters['category_id'])) {
+            $query->where('places.category_id', $filters['category_id']);
+        }
+
+        if (isset($filters['province_id'])) {
+            $query->where('places.province_id', $filters['province_id']);
+        }
+
+        if (isset($filters['search'])) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('places.title', 'like', "%{$filters['search']}%")
+                    ->orWhere('places.description', 'like', "%{$filters['search']}%");
+            });
+        }
+
+        if (isset($filters['exclude_id'])) {
+            $query->where('places.id', '!=', $filters['exclude_id']);
+        }
+
+        return $query;
     }
 }
