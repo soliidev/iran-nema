@@ -3,15 +3,15 @@
 namespace App\Repositories;
 
 use App\Models\Category;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
-    public function getAll(array $filters = []): LengthAwarePaginator
+    public function getAll(array $filters = []): Collection
     {
         return Category::query()
             ->when(isset($filters['search']), fn($q) => $q->where('title', 'like', "%{$filters['search']}%"))
-            ->paginate($filters['per_page'] ?? 15);
+            ->get();
     }
 
     public function findById(int $id): ?Category

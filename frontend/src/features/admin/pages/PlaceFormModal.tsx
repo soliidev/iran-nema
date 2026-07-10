@@ -65,7 +65,7 @@ const PlaceFormModal = ({ isOpen, onClose, placeId, onSuccess }: PlaceFormModalP
         (async () => {
           try {
             const { data: res } = await placeService.getById(placeId);
-            const place = res.data ?? res;
+            const place = res.data;
             setCode(place.code);
             setTitle(place.title);
             setDescription(place.description ?? "");

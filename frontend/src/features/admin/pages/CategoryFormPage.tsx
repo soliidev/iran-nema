@@ -27,7 +27,7 @@ const CategoryFormPage = () => {
     (async () => {
       try {
         const { data: res } = await categoryService.getById(Number(id));
-        const cat = res.data ?? res;
+        const cat = res.data;
         setCode(cat.code);
         setTitle(cat.title);
         setDescription(cat.description ?? "");

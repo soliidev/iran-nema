@@ -17,9 +17,17 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Normalize Laravel paginator response: { data: { data: [], ... } } -> { data: [] }
+    const data = response.data;
+    if (data && typeof data === "object" && "data" in data && Array.isArray(data.data)) {
+      response.data = data.data;
+    }
+    return response;
+  },
   (error) => {
-    if (error.response?.status === 401) {
+    // Only redirect on 401 for authenticated routes (not login/register)
+    if (error.response?.status === 401 && !error.config?.url?.includes("/auth/")) {
       localStorage.removeItem("token");
       window.location.href = "/login";
     }

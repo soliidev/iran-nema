@@ -15,9 +15,14 @@ const routeLabels: Record<string, string> = {
   admin: "مدیریت",
   login: "ورود",
   register: "ثبت نام",
+  favorites: "علاقه‌مندی‌ها",
 };
 
-const Breadcrumb = () => {
+type Props = {
+  lastLabel?: string;
+};
+
+const Breadcrumb = ({ lastLabel }: Props) => {
   const { pathname } = useLocation();
   const segments = pathname.split("/").filter(Boolean);
 
@@ -30,6 +35,10 @@ const Breadcrumb = () => {
     currentPath += `/${segment}`;
     const label = routeLabels[segment] || segment;
     items.push({ label, path: currentPath });
+  }
+
+  if (lastLabel) {
+    items[items.length - 1] = { ...items[items.length - 1], label: lastLabel };
   }
 
   return (

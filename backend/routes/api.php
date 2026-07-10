@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('places/{place}/images/{image}/primary', [PlaceImageController::class, 'setPrimary']);
 
     Route::prefix('places/{place}')->group(function () {
+        Route::post('images/upload', [PlaceImageController::class, 'upload']);
+        Route::post('virtual-tour/upload', [VirtualTourImageController::class, 'upload']);
         Route::apiResource('images', PlaceImageController::class)->except(['index', 'show']);
         Route::apiResource('virtual-tour', VirtualTourImageController::class)->except(['index', 'show']);
     });

@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
 import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from "@/components/ui/table";
-import {Plus, Pencil, Trash2, Loader2, ArrowLeft} from "lucide-react";
+import {Plus, Pencil, Trash2, Loader2, Image as ImageIcon, ArrowLeft} from "lucide-react";
 import {Helmet} from "react-helmet-async";
 import {toast} from "sonner";
 import {adminService} from "@/services/admin.service";
@@ -31,8 +31,8 @@ const PlacesListPage = () => {
     const fetch = async () => {
         setLoading(true);
         try {
-            const {data: res} = await placeService.getAll({per_page: 100});
-            setPlaces(res.data ?? res);
+            const { data: res } = await placeService.getAll({ per_page: 100 });
+            setPlaces(res.data.data ?? res.data);
         } catch {
             toast.error("خطا در دریافت مکان‌ها");
         } finally {
@@ -123,6 +123,9 @@ const PlacesListPage = () => {
                                         <TableCell className="border border-border text-right">{p.rating}</TableCell>
                                         <TableCell className="border border-border">
                                             <div className="flex gap-2 justify-end">
+                                                <Button variant="ghost" size="icon" onClick={() => navigate(`/dashboard/places/${p.id}/images`)}>
+                                                    <ImageIcon className="h-4 w-4" />
+                                                </Button>
                                                 <Button variant="ghost" size="icon" onClick={() => {
                                                     setEditingPlaceId(p.id);
                                                     setIsModalOpen(true);

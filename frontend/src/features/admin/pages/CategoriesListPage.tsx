@@ -31,7 +31,7 @@ const CategoriesListPage = () => {
     setLoading(true);
     try {
       const { data: res } = await categoryService.getAll();
-      setCategories(res.data ?? res);
+      setCategories(res);
     } catch {
       toast.error("خطا در دریافت دسته‌بندی‌ها");
     } finally {

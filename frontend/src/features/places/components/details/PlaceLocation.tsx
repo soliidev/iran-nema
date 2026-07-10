@@ -4,11 +4,9 @@ import { useEffect, useRef, useState } from "react";
 type Props = {
   latitude: number;
   longitude: number;
-  city: string;
-  province: string;
 };
 
-export default function PlaceLocation({ latitude, longitude, city, province }: Props) {
+export default function PlaceLocation({ latitude, longitude }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<unknown | null>(null);
   const [mapError, setMapError] = useState(false);
@@ -117,7 +115,9 @@ export default function PlaceLocation({ latitude, longitude, city, province }: P
       <h3 className="text-lg font-semibold">موقعیت مکانی</h3>
       <div className="flex items-center gap-3 text-muted-foreground">
         <MapPin className="h-5 w-5 shrink-0 text-primary" />
-        <span>{city}، {province}</span>
+        <span>
+          {Number(longitude).toFixed(6)}، {Number(latitude).toFixed(6)}
+        </span>
       </div>
       {mapError ? (
         <div className="flex h-64 w-full items-center justify-center rounded-2xl bg-muted">

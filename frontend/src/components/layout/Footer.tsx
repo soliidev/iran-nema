@@ -1,7 +1,26 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Container from "./Container";
+import { categoryService } from "@/services/category.service";
 
 const Footer = () => {
+  const [categories, setCategories] = useState<{ id: number; code: string; title: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data: res } = await categoryService.getAll();
+        setCategories(res.data.data ?? res.data);
+      } catch {
+        console.error("Failed to fetch categories for footer");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <footer className="mt-20 border-t bg-muted/30 py-16">
       <Container>
@@ -27,10 +46,15 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 font-semibold">دسته‌بندی</h4>
             <div className="flex flex-col gap-3 text-muted-foreground">
-              <span className="transition hover:text-primary cursor-pointer">آثار تاریخی</span>
-              <span className="transition hover:text-primary cursor-pointer">طبیعت</span>
-              <span className="transition hover:text-primary cursor-pointer">شهرهای تاریخی</span>
-              <span className="transition hover:text-primary cursor-pointer">کوهستان</span>
+              {loading ? (
+                <div className="h-4 bg-muted animate-pulse rounded w-3/4" />
+              ) : (
+                categories.map((cat) => (
+                  <Link key={cat.id} to={`/places?category=${cat.code}`} className="transition hover:text-primary">
+                    {cat.title}
+                  </Link>
+                ))
+              )}
             </div>
           </div>
 

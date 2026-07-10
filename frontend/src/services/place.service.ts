@@ -27,4 +27,7 @@ export const placeService = {
 
   getImages: (id: number) =>
     api.get(`/places/${id}/images`),
+
+  getVirtualTours: (id: number) =>
+    api.get(`/places/${id}/virtual-tour`),
 };

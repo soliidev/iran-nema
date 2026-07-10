@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,7 +23,13 @@ class AuthController extends Controller
         $token = $user->createToken('auth-token')->plainTextToken;
 
         return response()->json([
-            'user' => new UserResource($user),
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+                'is_admin' => (bool) $user->is_admin,
+                'email_verified_at' => $user->email_verified_at,
+            ],
             'token' => $token,
         ]);
     }
@@ -40,13 +45,26 @@ class AuthController extends Controller
         $token = $user->createToken('auth-token')->plainTextToken;
 
         return response()->json([
-            'user' => new UserResource($user),
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+                'is_admin' => (bool) $user->is_admin,
+                'email_verified_at' => $user->email_verified_at,
+            ],
             'token' => $token,
         ]);
     }
 
     public function user(Request $request): JsonResponse
     {
-        return response()->json(new UserResource($request->user()));
+        $user = $request->user();
+        return response()->json([
+            'id' => $user->id,
+            'username' => $user->username,
+            'email' => $user->email,
+            'is_admin' => (bool) $user->is_admin,
+            'email_verified_at' => $user->email_verified_at,
+        ]);
     }
 }

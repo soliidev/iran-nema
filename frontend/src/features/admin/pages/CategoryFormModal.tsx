@@ -31,7 +31,7 @@ const CategoryFormModal = ({ isOpen, onClose, categoryId, onSuccess }: CategoryF
         (async () => {
           try {
             const { data: res } = await categoryService.getById(categoryId);
-            const cat = res.data ?? res;
+            const cat = res.data.data;
             setCode(cat.code);
             setTitle(cat.title);
             setDescription(cat.description ?? "");

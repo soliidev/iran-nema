@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
@@ -12,7 +12,7 @@ class CategoryService
         private readonly CategoryRepository $categoryRepository
     ) {}
 
-    public function getAll(array $filters = []): LengthAwarePaginator
+    public function getAll(array $filters = []): Collection
     {
         return $this->categoryRepository->getAll($filters);
     }
