@@ -46,10 +46,10 @@ export default function PlaceDetailsPage() {
       </Helmet>
       <section className="py-8">
         <Container>
-          <Breadcrumb />
+          <Breadcrumb lastLabel={place.title} />
 
           <div className="mt-4 grid gap-10 lg:grid-cols-2">
-            <PlaceGallery images={place.gallery} title={place.title} />
+            <PlaceGallery key={place.id} images={place.gallery} title={place.title} />
             <div className="space-y-8">
               <PlaceInfo
                 title={place.title}
@@ -60,7 +60,7 @@ export default function PlaceDetailsPage() {
                 description={place.description}
                 hasVirtualTour={place.hasVirtualTour}
               />
-              <PlaceLocation latitude={place.latitude} longitude={place.longitude} city={place.city} province={place.province} />
+              <PlaceLocation latitude={place.latitude} longitude={place.longitude} />
               <PlaceActions />
             </div>
           </div>

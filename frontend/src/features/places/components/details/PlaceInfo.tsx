@@ -11,6 +11,9 @@ type Props = {
 };
 
 export default function PlaceInfo({ title, city, province, rating, category, description, hasVirtualTour }: Props) {
+  const location =
+    city && city !== province ? `${city}، استان ${province}` : `استان ${province}`;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
@@ -21,7 +24,7 @@ export default function PlaceInfo({ title, city, province, rating, category, des
       </div>
 
       <div className="flex items-center gap-4 text-muted-foreground">
-        <span>{city}، {province}</span>
+        <span>{location}</span>
         <span>•</span>
         <span className="text-primary">★ {rating}</span>
         <span>•</span>
