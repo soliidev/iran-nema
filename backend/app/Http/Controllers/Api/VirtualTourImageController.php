@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreVirtualTourImageRequest;
-use App\Http\Requests\UpdateVirtualTourImageRequest;
 use App\Http\Resources\VirtualTourImageResource;
 use App\Services\VirtualTourImageService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Request;
 
 class VirtualTourImageController extends Controller
 {
@@ -16,39 +14,69 @@ class VirtualTourImageController extends Controller
         private readonly VirtualTourImageService $virtualTourImageService
     ) {}
 
-    public function index(int $placeId): AnonymousResourceCollection
+    public function index(int $placeId): JsonResponse
     {
-        $images = $this->virtualTourImageService->getByPlace($placeId);
-        return VirtualTourImageResource::collection($images);
+        $tours = $this->virtualTourImageService->getByPlace($placeId);
+        $formatted = $tours->map(fn($t) => $this->virtualTourImageService->formatTour($t))->values();
+        return response()->json(['data' => $formatted]);
     }
 
-    public function store(StoreVirtualTourImageRequest $request): JsonResponse
+    public function upload(Request $request, int $placeId): JsonResponse
     {
-        $image = $this->virtualTourImageService->create($request->validated());
+        $request->validate([
+            'image' => 'required|image|max:5120',
+            'title' => 'required|string|max:255',
+        ]);
+
+        $tour = $this->virtualTourImageService->upload($placeId, $request->file('image'), $request->input('title'));
+
+        return response()->json([
+            'message' => 'Virtual tour uploaded successfully',
+            'data' => $tour,
+        ], 201);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $request->validate([
+            'place_id' => 'required|integer|exists:places,id',
+            'title' => 'required|string|max:255',
+            'image_path' => 'required|string|max:500',
+        ]);
+
+        $tour = $this->virtualTourImageService->create($request->validated());
+        $formatted = $this->virtualTourImageService->formatTour($tour);
+
         return response()->json([
             'message' => 'Virtual tour image created successfully',
-            'data' => new VirtualTourImageResource($image),
+            'data' => $formatted,
         ], 201);
     }
 
     public function show(int $id): JsonResponse
     {
-        $image = $this->virtualTourImageService->findById($id);
-        if (!$image) {
+        $tour = $this->virtualTourImageService->findById($id);
+        if (!$tour) {
             return response()->json(['message' => 'Virtual tour image not found'], 404);
         }
-        return response()->json(['data' => new VirtualTourImageResource($image)]);
+        return response()->json(['data' => $this->virtualTourImageService->formatTour($tour)]);
     }
 
-    public function update(UpdateVirtualTourImageRequest $request, int $id): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
+        $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'image_path' => 'sometimes|required|string|max:500',
+        ]);
+
         $updated = $this->virtualTourImageService->update($id, $request->validated());
         if (!$updated) {
             return response()->json(['message' => 'Virtual tour image not found'], 404);
         }
+        $tour = $this->virtualTourImageService->findById($id);
         return response()->json([
             'message' => 'Virtual tour image updated successfully',
-            'data' => new VirtualTourImageResource($this->virtualTourImageService->findById($id)),
+            'data' => $this->virtualTourImageService->formatTour($tour),
         ]);
     }
 

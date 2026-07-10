@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryController extends Controller
 {
@@ -17,10 +15,10 @@ class CategoryController extends Controller
         private readonly CategoryService $categoryService
     ) {}
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): JsonResponse
     {
         $categories = $this->categoryService->getAll($request->all());
-        return CategoryResource::collection($categories);
+        return response()->json(['data' => $categories]);
     }
 
     public function store(StoreCategoryRequest $request): JsonResponse
@@ -28,7 +26,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->create($request->validated());
         return response()->json([
             'message' => 'Category created successfully',
-            'data' => new CategoryResource($category),
+            'data' => $category,
         ], 201);
     }
 
@@ -38,7 +36,7 @@ class CategoryController extends Controller
         if (!$category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
-        return response()->json(['data' => new CategoryResource($category)]);
+        return response()->json(['data' => $category]);
     }
 
     public function update(UpdateCategoryRequest $request, int $id): JsonResponse
@@ -49,7 +47,7 @@ class CategoryController extends Controller
         }
         return response()->json([
             'message' => 'Category updated successfully',
-            'data' => new CategoryResource($this->categoryService->findById($id)),
+            'data' => $this->categoryService->findById($id),
         ]);
     }
 
@@ -68,6 +66,6 @@ class CategoryController extends Controller
         if (!$category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
-        return response()->json(['data' => new CategoryResource($category)]);
+        return response()->json(['data' => $category]);
     }
 }

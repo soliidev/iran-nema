@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlaceImageRequest;
 use App\Http\Requests\UpdatePlaceImageRequest;
-use App\Http\Resources\PlaceImageResource;
 use App\Services\PlaceImageService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Request;
 
 class PlaceImageController extends Controller
 {
@@ -16,18 +15,34 @@ class PlaceImageController extends Controller
         private readonly PlaceImageService $placeImageService
     ) {}
 
-    public function index(int $placeId): AnonymousResourceCollection
+    public function index(int $placeId): JsonResponse
     {
         $images = $this->placeImageService->getByPlace($placeId);
-        return PlaceImageResource::collection($images);
+        $formatted = $images->map(fn($img) => $this->placeImageService->formatImage($img))->values();
+        return response()->json(['data' => $formatted]);
+    }
+
+    public function upload(Request $request, int $placeId): JsonResponse
+    {
+        $request->validate([
+            'image' => 'required|image|max:10240',
+        ]);
+
+        $image = $this->placeImageService->upload($placeId, $request->file('image'));
+
+        return response()->json([
+            'message' => 'Image uploaded successfully',
+            'data' => $image,
+        ], 201);
     }
 
     public function store(StorePlaceImageRequest $request): JsonResponse
     {
         $image = $this->placeImageService->create($request->validated());
+        $formatted = $this->placeImageService->formatImage($image);
         return response()->json([
             'message' => 'Image created successfully',
-            'data' => new PlaceImageResource($image),
+            'data' => $formatted,
         ], 201);
     }
 
@@ -37,7 +52,7 @@ class PlaceImageController extends Controller
         if (!$image) {
             return response()->json(['message' => 'Image not found'], 404);
         }
-        return response()->json(['data' => new PlaceImageResource($image)]);
+        return response()->json(['data' => $this->placeImageService->formatImage($image)]);
     }
 
     public function update(UpdatePlaceImageRequest $request, int $id): JsonResponse
@@ -46,9 +61,10 @@ class PlaceImageController extends Controller
         if (!$updated) {
             return response()->json(['message' => 'Image not found'], 404);
         }
+        $image = $this->placeImageService->findById($id);
         return response()->json([
             'message' => 'Image updated successfully',
-            'data' => new PlaceImageResource($this->placeImageService->findById($id)),
+            'data' => $this->placeImageService->formatImage($image),
         ]);
     }
 
@@ -67,7 +83,7 @@ class PlaceImageController extends Controller
         if (!$image) {
             return response()->json(['message' => 'No primary image found'], 404);
         }
-        return response()->json(['data' => new PlaceImageResource($image)]);
+        return response()->json(['data' => $this->placeImageService->formatImage($image)]);
     }
 
     public function setPrimary(int $placeId, int $imageId): JsonResponse
