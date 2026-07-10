@@ -16,7 +16,15 @@ const AdminLayout = () => {
         return <Navigate to="/login" replace />;
     }
 
-    if (!user?.is_admin) {
+    if (!user) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <span className="text-muted-foreground">در حال بارگذاری...</span>
+            </div>
+        );
+    }
+
+    if (!user.is_admin) {
         return <Navigate to="/" replace />;
     }
 
