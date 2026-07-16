@@ -24,7 +24,11 @@ export interface ApiPlace {
   description: string | null;
   rating: string | number;
   category?: { id: number; title: string } | null;
+  category_title?: string;
+  category_code?: string;
   province?: { id: number; name: string } | null;
+  province_name?: string;
+  province_code?: string;
   primary_image?: { image_path: string; image_url?: string; is_primary?: boolean } | null;
   primaryImage?: { image_path: string; image_url?: string; is_primary?: boolean } | null;
   primary_image_path?: string;
@@ -40,8 +44,8 @@ export function mapApiPlaceToPlace(api: ApiPlace): Place {
   return {
     id: api.id,
     title: api.title,
-    city: api.province?.name || "",
-    province: api.province?.name || "",
+    city: api.province?.name || api.province_name || "",
+    province: api.province?.name || api.province_name || "",
     description: api.description || "",
     image: primaryImage?.image_url || primaryImage?.image_path || api.primary_image_path || "/images/places/persepolis/persepolis.jpg",
     gallery: (() => {
@@ -56,7 +60,7 @@ export function mapApiPlaceToPlace(api: ApiPlace): Place {
     latitude: Number(api.latitude),
     longitude: Number(api.longitude),
     rating: Number(api.rating),
-    category: api.category?.title || "",
+    category: api.category?.title || api.category_title || "",
     hasVirtualTour: (api.virtual_tour_images ?? api.virtualTourImages ?? []).length > 0,
   };
 }

@@ -33,7 +33,7 @@ const VirtualTourPreview = () => {
     <section className="bg-muted/50 py-24">
       <Container>
         <SectionTitle title="تور مجازی ۳۶۰ درجه" description="تجربه بازدید مجازی از معروف‌ترین جاذبه‌های ایران" />
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
           {tours.map((tour) => (
             <TourCard key={tour.id} {...tour} />
           ))}

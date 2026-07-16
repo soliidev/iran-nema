@@ -6,7 +6,7 @@ import HeroStats from "./HeroStats";
 
 const Hero = () => {
     return (
-        <section className="relative overflow-hidden py-32">
+        <section className="relative overflow-hidden py-16 md:py-32">
             <HeroBackground />
 
             <Container>

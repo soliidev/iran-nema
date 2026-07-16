@@ -49,7 +49,7 @@ const Footer = () => {
                 <div className="h-4 bg-muted animate-pulse rounded w-3/4" />
               ) : (
                 categories.map((cat) => (
-                  <Link key={cat.id} to={`/places?category=${cat.code}`} className="transition hover:text-primary">
+                  <Link key={cat.id} to={`/places?category=${encodeURIComponent(cat.title)}`} className="transition hover:text-primary">
                     {cat.title}
                   </Link>
                 ))

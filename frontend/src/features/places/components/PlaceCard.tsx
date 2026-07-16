@@ -30,7 +30,7 @@ const PlaceCard = ({
                         <img
                             src={image}
                             alt={title}
-                            className="h-64 w-full object-cover transition duration-500 group-hover:scale-110"
+                            className="h-48 w-full object-cover transition duration-500 group-hover:scale-110 md:h-64"
                             onError={() => setImgError(true)}
                         />
                     )}

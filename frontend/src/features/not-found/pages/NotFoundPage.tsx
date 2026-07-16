@@ -16,7 +16,7 @@ const NotFoundPage = () => {
         </p>
         <Link
           to="/"
-          className={cn(buttonVariants({ variant: "default" }), "mt-8")}
+          className={cn(buttonVariants({ variant: "default" }), "mt-8 text-white!")}
         >
           بازگشت به خانه
         </Link>
