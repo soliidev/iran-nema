@@ -70,7 +70,7 @@ const SearchButton = () => {
       </Button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-2 w-80 sm:w-96 rounded-xl border bg-card p-3 shadow-2xl z-50">
+        <div className="fixed left-2 right-2 top-20 sm:absolute sm:left-auto sm:right-0 sm:top-full mt-2 sm:mt-2 sm:w-96 rounded-xl border bg-card p-3 shadow-2xl z-50">
           <div className="relative">
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input

@@ -10,7 +10,7 @@ const FeaturedPlaces = () => {
   const featured = places.slice(0, 6);
 
   return (
-    <section className="py-24">
+    <section className="py-16 md:py-24">
       <Container>
         <div className="mb-12 text-center">
           <h2 className="text-4xl font-black">محبوب‌ترین مکان‌ها</h2>

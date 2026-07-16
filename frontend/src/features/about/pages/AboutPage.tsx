@@ -24,7 +24,7 @@ const AboutPage = () => {
           <Breadcrumb />
           <div className="mt-8 grid gap-16 lg:grid-cols-2">
             <div>
-              <h1 className="text-5xl font-black leading-tight">
+              <h1 className="text-3xl font-black leading-tight md:text-5xl">
                 درباره <span className="text-primary">ایران‌نما</span>
               </h1>
               <p className="mt-6 leading-8 text-muted-foreground">
@@ -42,7 +42,7 @@ const AboutPage = () => {
                 const Icon = stat.icon;
                 const val = stat.key ? `${apiStats?.[stat.key] ?? 0}` : stat.value;
                 return (
-                  <div key={stat.label} className="flex flex-col items-center rounded-2xl border bg-card p-8 text-center transition hover:border-primary">
+                  <div key={stat.label} className="flex flex-col items-center rounded-2xl border bg-card p-6 md:p-8 text-center transition hover:border-primary">
                     <div className="flex items-center justify-center">
                       <Icon className="h-10 w-10 text-primary" />
                     </div>

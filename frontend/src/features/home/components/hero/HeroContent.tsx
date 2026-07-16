@@ -6,7 +6,7 @@ import { heroData } from "../../data/hero";
 const HeroContent = () => {
   return (
     <>
-      <h1 className="max-w-4xl text-5xl font-black leading-tight lg:text-7xl">
+      <h1 className="max-w-4xl text-3xl font-black leading-tight md:text-5xl lg:text-7xl">
         {heroData.title}
       </h1>
 
