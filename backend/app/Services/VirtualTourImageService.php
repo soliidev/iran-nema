@@ -63,7 +63,7 @@ class VirtualTourImageService
             'place_id' => $tour->place_id,
             'title' => $tour->title,
             'image_path' => $tour->image_path,
-            'image_url' => Storage::disk('public')->url($tour->image_path),
+            'image_url' => $tour->image_url,
             'created_at' => $tour->created_at,
             'updated_at' => $tour->updated_at,
         ];

@@ -28,7 +28,7 @@ class PlaceImage extends Model
 
     public function getImageUrlAttribute(): string
     {
-        return $this->image_path ? Storage::disk('public')->url($this->image_path) : '';
+        return $this->image_path ? url('api/media/' . ltrim($this->image_path, '/')) : '';
     }
 
     public function place(): BelongsTo

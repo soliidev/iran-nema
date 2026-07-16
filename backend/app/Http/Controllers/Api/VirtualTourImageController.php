@@ -24,7 +24,7 @@ class VirtualTourImageController extends Controller
     public function upload(Request $request, int $placeId): JsonResponse
     {
         $request->validate([
-            'image' => 'required|image|max:5120',
+            'image' => 'required|image|max:512000',
             'title' => 'required|string|max:255',
         ]);
 
@@ -62,30 +62,32 @@ class VirtualTourImageController extends Controller
         return response()->json(['data' => $this->virtualTourImageService->formatTour($tour)]);
     }
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, int $virtualTour): JsonResponse
     {
         $request->validate([
             'title' => 'sometimes|required|string|max:255',
             'image_path' => 'sometimes|required|string|max:500',
         ]);
 
-        $updated = $this->virtualTourImageService->update($id, $request->validated());
+        $updated = $this->virtualTourImageService->update($virtualTour, $request->validated());
         if (!$updated) {
             return response()->json(['message' => 'Virtual tour image not found'], 404);
         }
-        $tour = $this->virtualTourImageService->findById($id);
+        $tour = $this->virtualTourImageService->findById($virtualTour);
         return response()->json([
             'message' => 'Virtual tour image updated successfully',
             'data' => $this->virtualTourImageService->formatTour($tour),
         ]);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $placeId, int $virtualTour): JsonResponse
     {
-        $deleted = $this->virtualTourImageService->delete($id);
+        $deleted = $this->virtualTourImageService->delete($virtualTour);
+
         if (!$deleted) {
             return response()->json(['message' => 'Virtual tour image not found'], 404);
         }
+
         return response()->json(['message' => 'Virtual tour image deleted successfully']);
     }
 }
