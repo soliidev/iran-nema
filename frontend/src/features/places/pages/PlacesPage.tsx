@@ -1,10 +1,11 @@
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Container from "@/components/layout/Container";
 import PlaceGrid from "../components/PlaceGrid";
 import PlaceSearch from "../components/PlaceSearch";
 import PlaceFilter from "../components/PlaceFilter";
 import PlacePagination from "../components/PlacePagination";
 import { Breadcrumb } from "@/components/common";
-import { useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { usePlaces } from "../hooks/usePlace";
 import { Loader2, MapIcon } from "lucide-react";
@@ -12,10 +13,17 @@ import { Loader2, MapIcon } from "lucide-react";
 const ITEMS_PER_PAGE = 6;
 
 export default function PlacesPage() {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("q") || "");
+  const [category, setCategory] = useState(searchParams.get("category") || "all");
   const [page, setPage] = useState(1);
   const { data: places = [], isLoading } = usePlaces();
+
+  useEffect(() => {
+    setSearch(searchParams.get("q") || "");
+    setCategory(searchParams.get("category") || "all");
+    setPage(1);
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     return places.filter((p) => {
@@ -37,6 +45,22 @@ export default function PlacesPage() {
     return ["all", ...cats];
   }, [places]);
 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+    const params = new URLSearchParams(searchParams);
+    if (value) params.set("q", value); else params.delete("q");
+    setSearchParams(params, { replace: true });
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setCategory(value);
+    setPage(1);
+    const params = new URLSearchParams(searchParams);
+    if (value && value !== "all") params.set("category", value); else params.delete("category");
+    setSearchParams(params, { replace: true });
+  };
+
   return (
     <>
       <Helmet>
@@ -56,8 +80,8 @@ export default function PlacesPage() {
           </div>
 
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <PlaceSearch value={search} onChange={setSearch} />
-            <PlaceFilter value={category} onChange={setCategory} categories={categories} />
+            <PlaceSearch value={search} onChange={handleSearchChange} />
+            <PlaceFilter value={category} onChange={handleCategoryChange} categories={categories} />
           </div>
 
           {isLoading ? (

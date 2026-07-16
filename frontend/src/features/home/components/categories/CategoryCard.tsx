@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type Props = {
     title: string;
     icon: React.ElementType;
@@ -8,9 +10,11 @@ const CategoryCard = ({
     icon: Icon,
 }: Props) => {
     return (
-        <div
+        <Link
+            to={`/places?category=${encodeURIComponent(title)}`}
             className="
                 group
+                block
                 rounded-2xl
                 border
                 bg-card
@@ -38,7 +42,7 @@ const CategoryCard = ({
             <h3 className="mt-5 text-lg font-bold">
                 {title}
             </h3>
-        </div>
+        </Link>
     );
 }
 
