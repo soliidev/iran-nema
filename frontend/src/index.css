@@ -171,3 +171,10 @@
     color: white;
   }
 }
+.psv-navbar {
+  justify-content: flex-end !important;
+  padding-inline-end: 1rem !important;
+}
+.psv-navbar .psv-button[title="Fullscreen"] svg {
+  transform: scale(0.75) !important;
+}

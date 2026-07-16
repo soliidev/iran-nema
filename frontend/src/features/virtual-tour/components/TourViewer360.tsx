@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import { Viewer } from "@photo-sphere-viewer/core";
 import "@photo-sphere-viewer/core/index.css";
-import { Loader2, AlertTriangle } from "lucide-react";
+import { AlertTriangle, PanelRight, PanelLeft, Loader2 } from "lucide-react";
 import type { PanoramaSection } from "../types/tour";
 
 type Props = {
@@ -32,7 +32,12 @@ const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; t
   const viewerRef = useRef<Viewer | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [activePanorama, setActivePanorama] = useState(image);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const mountedRef = useRef(true);
+
+  useEffect(() => {
+    setSidebarOpen(window.innerWidth >= 1024);
+  }, []);
 
   const destroyViewer = useCallback(() => {
     if (viewerRef.current) {
@@ -61,7 +66,7 @@ const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; t
           caption: title,
           defaultZoomLvl: 0,
           navbar: ["zoom", "move", "fullscreen"],
-          loadingImg: undefined,
+          loadingImg: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
         });
 
         viewerRef.current = viewer;
@@ -102,12 +107,30 @@ const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; t
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black flex">
-      <div ref={containerRef} className="flex-1 h-full w-full" />
+    <div className="fixed inset-0 z-50 bg-black">
+      <div ref={containerRef} className="absolute inset-0 h-full w-full" />
+
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="absolute top-4 right-2 z-30 rounded-xl bg-white/10 p-2 text-white backdrop-blur transition hover:bg-white/20 cursor-pointer"
+        >
+          <PanelLeft className="h-5 w-5" />
+        </button>
+      )}
 
       {panoramas && panoramas.length > 0 && (
-        <div className="w-64 bg-black/90 border-l border-white/10 flex flex-col overflow-hidden">
-          <div className="p-4 border-b border-white/10">
+        <div
+          style={{ right: sidebarOpen ? "0" : "-16rem" }}
+          className="absolute top-0 bottom-0 z-20 w-64 bg-black/90 border-r border-white/10 flex flex-col overflow-hidden transition-all duration-300"
+        >
+          <div className="flex items-center p-4 border-b border-white/10">
+            <button
+              onClick={() => setSidebarOpen(false)}
+              className="rounded-xl bg-white/10 p-1.5 text-white hover:bg-white/20 transition cursor-pointer ml-2"
+            >
+              <PanelRight className="h-4 w-4" />
+            </button>
             <h3 className="text-white font-bold text-sm">سایر قسمت‌ها</h3>
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
@@ -162,7 +185,7 @@ const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; t
           destroyViewer();
           onClose();
         }}
-        className="absolute left-4 top-4 z-10 rounded-xl bg-white/10 px-4 py-2 text-white backdrop-blur transition hover:bg-white/20"
+        className="absolute left-4 top-4 z-30 rounded-xl bg-white/10 px-4 py-2 text-white backdrop-blur transition hover:bg-white/20"
       >
         بازگشت
       </button>
