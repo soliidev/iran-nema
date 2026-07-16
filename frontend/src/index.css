@@ -119,6 +119,27 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  [dir="rtl"] [data-slot="select-item"],
+  [dir="rtl"] [data-slot="select-trigger"],
+  [dir="rtl"] [data-slot="select-value"] {
+    text-align: right !important;
+  }
+
+  [dir="rtl"] [data-slot="select-item"] {
+    padding-right: 2rem;
+    padding-left: 0.375rem;
+  }
+
+  [dir="rtl"] [data-slot="select-item"] > span:first-child {
+    right: 0.5rem;
+    left: auto;
+  }
+
+  [dir="rtl"] [data-slot="select-trigger"] {
+    padding-right: 0.5rem;
+    padding-left: 0.625rem;
+  }
   html {
     @apply font-sans;
   }
