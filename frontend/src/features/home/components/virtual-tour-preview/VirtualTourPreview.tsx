@@ -26,7 +26,7 @@ const VirtualTourPreview = () => {
     id: p.id,
     title: p.title,
     location: p.city || p.province || "",
-    image: p.primary_image?.image_url || p.primary_image?.image_path || "",
+    image: p.primary_image?.image_url || p.primary_image?.image_path || p.primaryImage?.image_url || p.primaryImage?.image_path || "",
   }));
 
   return (

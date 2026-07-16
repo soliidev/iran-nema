@@ -18,8 +18,8 @@ export function usePlacesWithTours() {
     queryKey: ["places", "with-tours"],
     queryFn: async () => {
       const { data } = await placeService.getAll({ has_tour: true, per_page: 50 });
-      return (data.data ?? data).filter((p: { virtual_tour_images?: unknown[] }) =>
-        p.virtual_tour_images?.length
+      return (data.data ?? data).filter((p: { virtual_tour_images?: unknown[]; virtualTourImages?: unknown[] }) =>
+        (p.virtual_tour_images ?? p.virtualTourImages)?.length
       );
     },
     staleTime: 5 * 60 * 1000,
