@@ -8,10 +8,6 @@ export const navigation = [
         href: "/places",
     },
     {
-        title: "تور مجازی",
-        href: "/virtual-tour",
-    },
-    {
         title: "درباره ما",
         href: "/about",
     },

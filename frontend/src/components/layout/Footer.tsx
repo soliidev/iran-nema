@@ -11,7 +11,7 @@ const Footer = () => {
     const fetchCategories = async () => {
       try {
         const { data: res } = await categoryService.getAll();
-        setCategories(res.data.data ?? res.data);
+        setCategories(Array.isArray(res) ? res : res.data ?? []);
       } catch {
         console.error("Failed to fetch categories for footer");
       } finally {
@@ -37,7 +37,6 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-muted-foreground">
               <Link to="/" className="transition hover:text-primary">خانه</Link>
               <Link to="/places" className="transition hover:text-primary">مکان‌ها</Link>
-              <Link to="/virtual-tour" className="transition hover:text-primary">تور مجازی</Link>
               <Link to="/about" className="transition hover:text-primary">درباره ما</Link>
               <Link to="/contact" className="transition hover:text-primary">تماس با ما</Link>
             </div>
