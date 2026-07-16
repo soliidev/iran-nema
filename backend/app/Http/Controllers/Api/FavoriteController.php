@@ -28,11 +28,9 @@ class FavoriteController extends Controller
             if ($place) {
                 $primaryImageData = null;
                 if ($primaryImage) {
-                    $primaryImageData = [
-                        'image_path' => $primaryImage->image_path,
-                        'image_url' => $primaryImage->image_path
-                            ? \Illuminate\Support\Facades\Storage::disk('public')->url($primaryImage->image_path)
-                            : null,
+                $primaryImageData = [
+                    'image_path' => $primaryImage->image_path,
+                    'image_url' => $primaryImage->image_url,
                         'alt_text' => $primaryImage->alt_text,
                     ];
                 }

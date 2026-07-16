@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,9 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'ایمیل یا رمز عبور اشتباه است'], 401);
+            throw ValidationException::withMessages([
+                'email' => ['ایمیل یا رمز عبور اشتباه است'],
+            ]);
         }
 
         $token = $user->createToken('auth-token')->plainTextToken;

@@ -73,7 +73,7 @@ class PlaceImageService
             'id' => $image->id,
             'place_id' => $image->place_id,
             'image_path' => $image->image_path,
-            'image_url' => Storage::disk('public')->url($image->image_path),
+            'image_url' => $image->image_url,
             'alt_text' => $image->alt_text,
             'is_primary' => $image->is_primary,
             'created_at' => $image->created_at,

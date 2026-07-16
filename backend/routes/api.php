@@ -8,6 +8,15 @@ use App\Http\Controllers\Api\PlaceImageController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\VirtualTourImageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
+Route::get('media/{path}', function (string $path) {
+    if (!Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    return response()->file(Storage::disk('public')->path($path));
+})->where('path', '.*');
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/register', [AuthController::class, 'register']);
