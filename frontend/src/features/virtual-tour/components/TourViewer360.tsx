@@ -74,10 +74,6 @@ const PanoramaViewer = ({ image, title, onClose, panoramas }: { image: string; t
         viewer.addEventListener("ready", () => {
           if (mountedRef.current) setStatus("ready");
         });
-
-        viewer.addEventListener("error", () => {
-          if (mountedRef.current) setStatus("error");
-        });
       } catch {
         if (mountedRef.current) setStatus("error");
       }

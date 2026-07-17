@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { placeService } from "@/services/place.service";
-import type { Place, ApiPlace } from "../types/place";
+import type { ApiPlace } from "../types/place";
 import { mapApiPlaceToPlace } from "../types/place";
 
 export function usePlace(id: number) {

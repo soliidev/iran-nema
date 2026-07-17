@@ -10,7 +10,6 @@ export default function PlaceLocation({ latitude, longitude }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<unknown | null>(null);
   const [mapError, setMapError] = useState(false);
-  const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -92,7 +91,6 @@ export default function PlaceLocation({ latitude, longitude }: Props) {
         });
 
         mapInstanceRef.current = map;
-        if (!cancelled) setMapReady(true);
       } catch (err) {
         console.error("Map init error:", err);
         if (!cancelled) setMapError(true);

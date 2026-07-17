@@ -2,7 +2,8 @@ import Container from "@/components/layout/Container";
 import SectionTitle from "@/components/common/SectionTitle";
 import TourCard from "./TourCard";
 import { usePlacesWithTours } from "@/features/virtual-tour/hooks/useVirtualTours";
-import { Loader2, EyeOff } from "lucide-react";
+import type { ApiPlace } from "@/features/places/types/place";
+import { Loader2 } from "lucide-react";
 
 const VirtualTourPreview = () => {
   const { data: apiPlaces = [], isLoading } = usePlacesWithTours();
@@ -22,10 +23,10 @@ const VirtualTourPreview = () => {
 
   if (apiPlaces.length === 0) return null;
 
-  const tours = apiPlaces.slice(0, 3).map((p) => ({
+  const tours = (apiPlaces as ApiPlace[]).slice(0, 3).map((p) => ({
     id: p.id,
     title: p.title,
-    location: p.city || p.province || "",
+    location: p.province?.name || p.province_name || "",
     image: p.primary_image?.image_url || p.primary_image?.image_path || p.primaryImage?.image_url || p.primaryImage?.image_path || "",
   }));
 

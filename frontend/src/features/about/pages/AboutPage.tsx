@@ -6,7 +6,7 @@ import { Landmark, Users, Award, Target } from "lucide-react";
 
 const statItems = [
   { icon: Landmark, label: "جاذبه گردشگری", key: "total_places" as const },
-  { icon: Users, value: "۱۰K+", label: "بازدیدکنندگان", key: null as const },
+  { icon: Users, value: "۱۰K+", label: "بازدیدکنندگان", key: '' as const },
   { icon: Award, label: "استان تحت پوشش", key: "provinces_count" as const },
   { icon: Target, label: "دسته‌بندی", key: "categories_count" as const },
 ];

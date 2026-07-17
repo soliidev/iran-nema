@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { adminService } from "@/services/admin.service";
 import { placeService } from "@/services/place.service";
@@ -36,7 +35,6 @@ const PlaceFormModal = ({ isOpen, onClose, placeId, onSuccess }: PlaceFormModalP
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [rating, setRating] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [isEdit, setIsEdit] = useState(!!placeId);
   const [categories, setCategories] = useState<Category[]>([]);

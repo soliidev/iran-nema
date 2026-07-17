@@ -1,10 +1,8 @@
 import Container from "@/components/layout/Container";
 import SectionTitle from "@/components/common/SectionTitle";
 import { usePlaceStatistics } from "@/features/places/hooks/usePlacesQuery";
-import { Landmark, Users, Award, Target, Loader2 } from "lucide-react";
+import { Landmark, Users, Award, Target } from "lucide-react";
 import { useMemo } from "react";
-
-const iconMap = [Landmark, Users, Award, Target];
 
 const labels = [
   "جاذبه گردشگری",

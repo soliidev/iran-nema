@@ -1,8 +1,8 @@
 import Container from "@/components/layout/Container";
 import { Breadcrumb } from "@/components/common";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
-import { Users, MapPin, Layers, Image, BarChart3, Settings } from "lucide-react";
+import { MapPin, Layers, Image, BarChart3, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const sections = [

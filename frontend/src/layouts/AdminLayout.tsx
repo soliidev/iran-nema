@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, Navigate, Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks";
-import { LayoutDashboard, MapPin, Layers, Menu, X } from "lucide-react";
+import { LayoutDashboard, MapPin, Layers, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const sidebarLinks = [

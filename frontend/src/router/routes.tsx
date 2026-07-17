@@ -1,9 +1,10 @@
-import { lazy, Suspense } from "react";
+import {type JSX, lazy, Suspense} from "react";
 import MainLayout from "@/layouts/MainLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 import { createBrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "@/components/common";
 import { Skeleton } from "@/components/ui/skeleton";
+import * as React from "react";
 
 const HomePage = lazy(() => import("@/features/home/pages/HomePage"));
 const PlacesPage = lazy(() => import("@/features/places/pages/PlacesPage"));
