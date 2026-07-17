@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { placeService } from "../services/place.service";
 import type { Place } from "../types/place";
+import {placeService} from "@/services/place.service.ts";
 
 export const fetchPlaces = createAsyncThunk<Place[]>(
   "places/fetchAll",

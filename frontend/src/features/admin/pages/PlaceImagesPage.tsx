@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Loader2, Trash2, Star, Upload, Video, X, Image as ImageIcon } from "lucide-react";
+import { Loader2, Trash2, Star, Upload, Video, Image as ImageIcon } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { toast } from "sonner";
 import { adminService } from "@/services/admin.service";
