@@ -3,16 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Place;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class PlaceRepository
 {
-    public function getAll(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 15): \Illuminate\Database\Eloquent\Collection
     {
         return $this->baseQuery($filters)
+            ->with(['category', 'province'])
             ->latest()
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->getCollection();
     }
 
     public function findById(int $id, array $relations = []): ?Place

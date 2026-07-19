@@ -67,8 +67,8 @@ const CategoriesListPage = () => {
       <Helmet><title>مدیریت دسته‌بندی‌ها | ایران‌نما</title></Helmet>
       <div className="mb-6 flex flex-row-reverse items-center justify-between">
         <div className="flex items-center gap-2">
-          <Button variant="outline" className={'flex justify-between'} onClick={() => navigate(-1)}>
-            بازگشت
+          <Button variant="outline" className={'flex justify-between'} onClick={() => navigate("/")}>
+            بازگشت به خانه
             <ArrowLeft />
           </Button>
         </div>
@@ -94,7 +94,8 @@ const CategoriesListPage = () => {
               هیچ دسته‌بندی‌ای وجود ندارد
             </div>
           ) : (
-            <Table dir="rtl" className="border border-border">
+            <div className="overflow-x-auto">
+            <Table dir="rtl" className="border border-border min-w-[640px]">
               <TableHeader className="bg-muted/50">
                 <TableRow>
                   <TableHead className="border border-border w-12 text-center">ردیف</TableHead>
@@ -127,6 +128,7 @@ const CategoriesListPage = () => {
                 ))}
               </TableBody>
             </Table>
+            </div>
           )}
         </CardContent>
       </Card>

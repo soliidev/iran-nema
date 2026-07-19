@@ -10,6 +10,8 @@ export interface Place {
   longitude: number;
   rating: number;
   category: string;
+  category_title?: string;
+  province_name?: string;
   hasVirtualTour: boolean;
 }
 

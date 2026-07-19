@@ -29,13 +29,14 @@ const CategoryFormModal = ({ isOpen, onClose, categoryId, onSuccess }: CategoryF
         (async () => {
           try {
             const { data: res } = await categoryService.getById(categoryId);
-            const cat = res.data.data;
-            setCode(cat.code);
-            setTitle(cat.title);
+            const cat = res?.data?.data ?? res?.data ?? res;
+            setCode(cat.code ?? "");
+            setTitle(cat.title ?? "");
             setDescription(cat.description ?? "");
             setIcon(cat.icon ?? "");
-          } catch {
-            toast.error("خطا در دریافت اطلاعات");
+          } catch (err) {
+            console.error("Category getById error:", err);
+            toast.error("خطا در دریافت اطلاعات دسته‌بندی");
             onClose();
           }
         })();

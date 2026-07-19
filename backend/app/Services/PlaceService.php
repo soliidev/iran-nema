@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Place;
 use App\Repositories\PlaceRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PlaceService
 {
@@ -12,7 +11,7 @@ class PlaceService
         private readonly PlaceRepository $placeRepository
     ) {}
 
-    public function getAll(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 15): \Illuminate\Database\Eloquent\Collection
     {
         return $this->placeRepository->getAll($filters, $perPage);
     }

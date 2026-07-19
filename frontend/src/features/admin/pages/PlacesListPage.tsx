@@ -15,8 +15,10 @@ interface Place {
     id: number;
     code: string;
     title: string;
-    category?: { title: string };
-    province?: { name: string };
+    category?: { title: string } | null;
+    category_title?: string;
+    province?: { name: string } | null;
+    province_name?: string;
     rating: number;
 }
 
@@ -32,7 +34,7 @@ const PlacesListPage = () => {
         setLoading(true);
         try {
             const { data: res } = await placeService.getAll({ per_page: 100 });
-            setPlaces(res.data.data ?? res.data);
+            setPlaces(res.data?.data ?? res.data ?? res);
         } catch {
             toast.error("خطا در دریافت مکان‌ها");
         } finally {
@@ -70,8 +72,8 @@ const PlacesListPage = () => {
             <Helmet><title>مدیریت مکان‌ها | ایران‌نما</title></Helmet>
             <div className="mb-6 flex flex-row-reverse items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" onClick={() => navigate(-1)}>
-                        بازگشت
+                    <Button variant="outline" onClick={() => navigate("/")}>
+                        بازگشت به خانه
                         <ArrowLeft className="ml-2 h-4 w-4" />
                     </Button>
                 </div>
@@ -97,7 +99,8 @@ const PlacesListPage = () => {
                             هیچ مکانی وجود ندارد
                         </div>
                     ) : (
-                        <Table dir="rtl" className="border border-border">
+                        <div className="w-full max-w-full overflow-x-auto">
+                        <Table dir="rtl" className="border border-border min-w-[760px]">
                             <TableHeader className="bg-muted/50">
                                 <TableRow>
                                     <TableHead className="border border-border w-12 text-center">ردیف</TableHead>
@@ -117,9 +120,9 @@ const PlacesListPage = () => {
                                                    dir="ltr">{p.code}</TableCell>
                                         <TableCell className="border border-border text-right">{p.title}</TableCell>
                                         <TableCell
-                                            className="border border-border text-right">{p.category?.title ?? "-"}</TableCell>
+                                            className="border border-border text-right">{p.category?.title ?? p.category_title ?? "-"}</TableCell>
                                         <TableCell
-                                            className="border border-border text-right">{p.province?.name ?? "-"}</TableCell>
+                                            className="border border-border text-right">{p.province?.name ?? p.province_name ?? "-"}</TableCell>
                                         <TableCell className="border border-border text-right">{p.rating}</TableCell>
                                         <TableCell className="border border-border">
                                             <div className="flex gap-2 justify-end">
@@ -142,6 +145,7 @@ const PlacesListPage = () => {
                                 ))}
                             </TableBody>
                         </Table>
+                        </div>
                     )}
                 </CardContent>
             </Card>

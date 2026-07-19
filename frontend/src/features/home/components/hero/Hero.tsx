@@ -2,7 +2,6 @@ import Container from "@/components/layout/Container";
 import HeroBackground from "./HeroBackground";
 import HeroSearch from "./HeroSearch";
 import HeroContent from "./HeroContent";
-import HeroStats from "./HeroStats";
 
 const Hero = () => {
     return (
@@ -17,10 +16,6 @@ const Hero = () => {
 
                     <div className="mt-10 w-full max-w-xl">
                         <HeroSearch />
-                    </div>
-
-                    <div className="mt-16 w-full">
-                        <HeroStats />
                     </div>
 
                 </div>
