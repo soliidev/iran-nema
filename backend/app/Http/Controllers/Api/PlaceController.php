@@ -18,7 +18,7 @@ class PlaceController extends Controller
     public function index(Request $request): JsonResponse
     {
         $places = $this->placeService->getAll($request->all(), $request->get('per_page', 15));
-        return response()->json(['data' => $places]);
+        return response()->json(['data' => $places->values()->all()]);
     }
 
     public function store(StorePlaceRequest $request): JsonResponse

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, Navigate, Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks";
-import { LayoutDashboard, MapPin, Layers, Menu } from "lucide-react";
+import { LayoutDashboard, MapPin, Layers, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const sidebarLinks = [
@@ -69,22 +69,18 @@ const AdminLayout = () => {
                 />
             )}
 
-            {/* Mobile sidebar */}
+            {/* Sidebar: fixed drawer on mobile, static on desktop */}
             <div
-                className={`fixed inset-y-0 right-0 z-50 w-64 transform transition-transform duration-300 lg:relative lg:translate-x-0 ${
-                    sidebarOpen ? "translate-x-0" : "translate-x-full"
-                }`}
+                style={{ right: sidebarOpen ? "0" : "-16rem" }}
+                className="fixed inset-y-0 z-50 w-64 transition-all duration-300 lg:static lg:right-0 lg:z-auto"
             >
                 {sidebar}
             </div>
 
-            {/* Desktop sidebar (hidden on mobile) */}
-            <div className="hidden lg:block">{sidebar}</div>
-
-            <main className="flex-1 p-4 md:p-8">
+            <main className="min-w-0 flex-1 p-4 md:p-8">
                 <div className="mb-4 flex items-center gap-3 lg:hidden">
-                    <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(true)}>
-                        <Menu className="h-5 w-5" />
+                    <Button variant="ghost" size="icon" onClick={() => setSidebarOpen((p) => !p)}>
+                        {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                     </Button>
                     <h2 className="text-lg font-bold">پنل مدیریت</h2>
                 </div>

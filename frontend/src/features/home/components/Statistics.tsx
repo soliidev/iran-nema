@@ -28,7 +28,7 @@ const Statistics = () => {
   if (!items) return null;
 
   return (
-    <section className="py-16 md:py-20">
+    <section>
       <Container>
         <SectionTitle
           title="ایران‌نما در یک نگاه"
