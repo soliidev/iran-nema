@@ -21,7 +21,7 @@ const Categories = () => {
   }));
 
   return (
-    <section className="">
+    <section className="pb-24">
       <Container>
         <div className="mb-14 text-center">
           <h2 className="text-4xl font-black">دسته‌بندی جاذبه‌ها</h2>
