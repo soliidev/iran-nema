@@ -8,6 +8,7 @@ import { adminService } from "@/services/admin.service";
 import { placeService } from "@/services/place.service";
 import { categoryService } from "@/services/category.service";
 import { provinceService } from "@/services/province.service";
+import StarRating from "@/components/common/StarRating";
 
 interface Category {
   id: number;
@@ -36,7 +37,7 @@ const PlaceFormModal = ({ isOpen, onClose, placeId, onSuccess }: PlaceFormModalP
   const [longitude, setLongitude] = useState("");
   const [rating, setRating] = useState(0);
   const [saving, setSaving] = useState(false);
-  const [isEdit, setIsEdit] = useState(!!placeId);
+  const isEdit = !!placeId;
   const [categories, setCategories] = useState<Category[]>([]);
   const [provinces, setProvinces] = useState<Province[]>([]);
 
@@ -59,7 +60,6 @@ const PlaceFormModal = ({ isOpen, onClose, placeId, onSuccess }: PlaceFormModalP
   useEffect(() => {
     if (isOpen) {
       if (placeId) {
-        setIsEdit(true);
         (async () => {
           try {
             const { data: res } = await placeService.getById(placeId);
@@ -78,7 +78,6 @@ const PlaceFormModal = ({ isOpen, onClose, placeId, onSuccess }: PlaceFormModalP
           }
         })();
       } else {
-        setIsEdit(false);
         setCode("");
         setTitle("");
         setDescription("");
@@ -182,7 +181,9 @@ const PlaceFormModal = ({ isOpen, onClose, placeId, onSuccess }: PlaceFormModalP
           </div>
           <div className="space-y-2">
             <label htmlFor="rating" className="text-sm font-medium">امتیاز</label>
-            <Input id="rating" type="number" step="0.1" min="0" max="5" value={rating} onChange={(e) => setRating(Number(e.target.value))} required />
+            <div className="flex items-center justify-center gap-3">
+              <StarRating value={rating} onChange={setRating} />
+            </div>
           </div>
           <DialogFooter>
             <div className="flex gap-2 w-full justify-end">

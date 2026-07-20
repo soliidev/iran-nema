@@ -10,6 +10,7 @@ import {adminService} from "@/services/admin.service";
 import {placeService} from "@/services/place.service";
 import ConfirmDialog from "@/components/ui/confirm-dialog";
 import PlaceFormModal from "./PlaceFormModal";
+import StarRating from "@/components/common/StarRating";
 
 interface Place {
     id: number;
@@ -123,7 +124,11 @@ const PlacesListPage = () => {
                                             className="border border-border text-right">{p.category?.title ?? p.category_title ?? "-"}</TableCell>
                                         <TableCell
                                             className="border border-border text-right">{p.province?.name ?? p.province_name ?? "-"}</TableCell>
-                                        <TableCell className="border border-border text-right">{p.rating}</TableCell>
+                                        <TableCell className="border border-border text-center">
+                                            <div className="flex justify-center">
+                                                <StarRating value={p.rating} readOnly size={16} />
+                                            </div>
+                                        </TableCell>
                                         <TableCell className="border border-border">
                                             <div className="flex gap-2 justify-end">
                                                 <Button variant="ghost" size="icon" onClick={() => navigate(`/dashboard/places/${p.id}/images`)}>

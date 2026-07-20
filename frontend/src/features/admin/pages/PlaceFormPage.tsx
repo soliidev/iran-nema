@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { adminService } from "@/services/admin.service";
 import { placeService } from "@/services/place.service";
 import { categoryService } from "@/services/category.service";
+import StarRating from "@/components/common/StarRating";
 
 interface Province { id: number; name: string }
 interface Category { id: number; title: string }
@@ -28,7 +29,7 @@ const PlaceFormPage = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [description, setDescription] = useState("");
-  const [rating, setRating] = useState("0");
+  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -60,7 +61,7 @@ const PlaceFormPage = () => {
         setLatitude(String(p.latitude));
         setLongitude(String(p.longitude));
         setDescription(p.description ?? "");
-        setRating(String(p.rating));
+        setRating(p.rating ?? 0);
       } catch {
         toast.error("خطا در دریافت اطلاعات");
       } finally {
@@ -79,7 +80,7 @@ const PlaceFormPage = () => {
       latitude: parseFloat(latitude),
       longitude: parseFloat(longitude),
       description,
-      rating: parseFloat(rating),
+      rating: Number(rating),
     };
     try {
       if (isEdit) {
@@ -150,7 +151,9 @@ const PlaceFormPage = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">امتیاز</label>
-                <Input type="number" min="0" max="5" step="0.1" value={rating} onChange={(e) => setRating(e.target.value)} required />
+                <div className="flex items-center justify-center gap-3">
+                  <StarRating value={rating} onChange={setRating} />
+                </div>
               </div>
             </div>
 
