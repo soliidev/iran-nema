@@ -4,7 +4,7 @@ export const navigation = [
         href: "/",
     },
     {
-        title: "مکان‌ها",
+        title: "مکان‌ ها",
         href: "/places",
     },
     {
@@ -14,5 +14,9 @@ export const navigation = [
     {
         title: "تماس با ما",
         href: "/contact",
+    },
+    {
+        title: "قوانین و مقررات",
+        href: "/terms",
     },
 ];

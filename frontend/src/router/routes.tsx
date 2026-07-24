@@ -23,6 +23,7 @@ const PlaceFormPage = lazy(() => import("@/features/admin/pages/PlaceFormPage"))
 const PlaceImagesPage = lazy(() => import("@/features/admin/pages/PlaceImagesPage"));
 const FavoritesPage = lazy(() => import("@/features/favorites/pages/FavoritesPage"));
 const MessagesListPage = lazy(() => import("@/features/admin/pages/MessagesListPage"));
+const TermsPage = lazy(() => import("@/features/legal/pages/TermsPage"));
 
 const PageLoader = () => (
   <div className="space-y-4 p-8">
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
       { path: "virtual-tour", element: <ErrorBoundary>{withSuspense(VirtualTourPage)}</ErrorBoundary> },
       { path: "about", element: <ErrorBoundary>{withSuspense(AboutPage)}</ErrorBoundary> },
       { path: "contact", element: <ErrorBoundary>{withSuspense(ContactPage)}</ErrorBoundary> },
+      { path: "terms", element: <ErrorBoundary>{withSuspense(TermsPage)}</ErrorBoundary> },
       { path: "login", element: <ErrorBoundary>{withSuspense(LoginPage)}</ErrorBoundary> },
       { path: "register", element: <ErrorBoundary>{withSuspense(RegisterPage)}</ErrorBoundary> },
       { path: "favorites", element: <ErrorBoundary>{withSuspense(FavoritesPage)}</ErrorBoundary> },
