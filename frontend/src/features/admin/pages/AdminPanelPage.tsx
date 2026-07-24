@@ -2,7 +2,7 @@ import Container from "@/components/layout/Container";
 import { Breadcrumb } from "@/components/common";
 import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
-import { MapPin, Layers, Image, BarChart3, Settings } from "lucide-react";
+import { MapPin, Layers, Image, BarChart3, Settings, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const sections = [
@@ -11,6 +11,7 @@ const sections = [
   { icon: Image, label: "گالری تصاویر", href: "/dashboard/places", desc: "مدیریت تصاویر", color: "text-pink-500" },
   { icon: BarChart3, label: "آمار", href: "/dashboard", desc: "گزارشات و آمار", color: "text-orange-500" },
   { icon: Settings, label: "تنظیمات", href: "/dashboard/settings", desc: "تنظیمات سایت", color: "text-gray-500" },
+  { icon: Mail, label: "پیام‌ها", href: "/dashboard/messages", desc: "مشاهده و مدیریت پیام‌های ارسال شده", color: "text-blue-500" },
 ];
 
 const AdminPanelPage = () => {
