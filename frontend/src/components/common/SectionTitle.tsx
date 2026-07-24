@@ -8,7 +8,7 @@ const SectionTitle = ({
     description,
 }: Props) => {
     return (
-        <div className="mb-10">
+        <div className="my-10 text-center">
 
             <h2 className="text-3xl font-bold">
                 {title}
