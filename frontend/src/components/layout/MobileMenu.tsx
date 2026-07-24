@@ -15,8 +15,14 @@ const MobileMenu = () => {
           {open ? <X /> : <Menu />}
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72">
-        <nav className="mt-10 flex flex-col gap-4">
+      <SheetContent side="right" className="w-72" showCloseButton={false}>
+        <div className="flex items-center justify-between px-2 pt-2">
+          <span className="text-lg font-bold">ایران‌نما</span>
+          <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+        <nav className="mt-4 flex flex-col gap-4">
           {navigation.map((item) => (
             <NavLink
               key={item.href}
