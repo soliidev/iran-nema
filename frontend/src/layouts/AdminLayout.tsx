@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Outlet, Navigate, Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks";
-import { LayoutDashboard, MapPin, Layers, Menu, X } from "lucide-react";
+import { LayoutDashboard, MapPin, Layers, Mail, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const sidebarLinks = [
     { icon: LayoutDashboard, label: "داشبورد", href: "/dashboard" },
     { icon: Layers, label: "دسته‌بندی‌ها", href: "/dashboard/categories" },
     { icon: MapPin, label: "مکان‌ها", href: "/dashboard/places" },
+    { icon: Mail, label: "پیام‌ها", href: "/dashboard/messages" },
 ];
 
 const AdminLayout = () => {

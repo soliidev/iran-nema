@@ -26,4 +26,9 @@ export const adminService = {
     }),
   deleteVirtualTour: (placeId: number, tourId: number) =>
     api.delete(`/places/${placeId}/virtual-tour/${tourId}`),
+
+  getMessages: (params?: Record<string, unknown>) =>
+    api.get("/messages", { params }),
+  deleteMessage: (id: number) =>
+    api.delete(`/messages/${id}`),
 };

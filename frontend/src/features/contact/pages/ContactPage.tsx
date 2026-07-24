@@ -1,12 +1,13 @@
+import { useState, type FormEvent } from "react";
 import Container from "@/components/layout/Container";
 import { Breadcrumb } from "@/components/common";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Helmet } from "react-helmet-async";
-import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
+import { Mail, Phone, MapPin, MessageSquare, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import type { FormEvent } from "react";
+import { messageService } from "@/services/message.service";
 
 const contactInfo = [
   { icon: Mail, label: "ایمیل", value: "info@irannema.ir" },
@@ -15,9 +16,27 @@ const contactInfo = [
 ];
 
 const ContactPage = () => {
-  const handleSubmit = (e: FormEvent) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    toast.success("پیام شما با موفقیت ارسال شد");
+    setSending(true);
+    try {
+      await messageService.send({ name, email, subject, message });
+      toast.success("پیام شما با موفقیت ارسال شد");
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch {
+      toast.error("خطا در ارسال پیام");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -51,17 +70,17 @@ const ContactPage = () => {
                 })}
               </div>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border bg-card p-8">
-              <h2 className="text-2xl font-bold">ارسال پیام</h2>
+            <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border bg-card p-6">
+              <h2 className="text-2xl font-bold mb-4!">ارسال پیام</h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                <Input placeholder="نام و نام خانوادگی" required />
-                <Input type="email" placeholder="ایمیل" required />
+                <Input placeholder="نام و نام خانوادگی" value={name} onChange={(e) => setName(e.target.value)} required />
+                <Input type="email" placeholder="ایمیل" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
-              <Input placeholder="موضوع" required />
-              <Textarea placeholder="متن پیام..." rows={5} required />
-              <Button type="submit" size="lg" className="w-full gap-2">
-                <MessageSquare className="h-5 w-5" />
-                ارسال پیام
+              <Input placeholder="موضوع" value={subject} onChange={(e) => setSubject(e.target.value)} required />
+              <Textarea placeholder="متن پیام..." rows={5} value={message} onChange={(e) => setMessage(e.target.value)} required />
+              <Button type="submit" size="lg" className="w-full gap-2" disabled={sending}>
+                {sending ? <Loader2 className="h-5 w-5 animate-spin" /> : <MessageSquare className="h-5 w-5" />}
+                {sending ? "در حال ارسال..." : "ارسال پیام"}
               </Button>
             </form>
           </div>

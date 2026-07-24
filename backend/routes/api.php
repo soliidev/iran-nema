@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\PlaceController;
 use App\Http\Controllers\Api\PlaceImageController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\VirtualTourImageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -25,6 +26,8 @@ Route::get('auth/user', [AuthController::class, 'user'])->middleware('auth:sanct
 Route::get('provinces', [ProvinceController::class, 'index']);
 
 Route::get('statistics', [PlaceController::class, 'statistics']);
+
+Route::post('messages', [MessageController::class, 'store']);
 
 Route::prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
@@ -63,5 +66,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('{placeId}', [FavoriteController::class, 'destroy']);
         Route::get('check/{placeId}', [FavoriteController::class, 'check']);
         Route::get('count/{placeId}', [FavoriteController::class, 'count']);
+    });
+
+    Route::prefix('messages')->group(function () {
+        Route::get('/', [MessageController::class, 'index']);
+        Route::get('{id}', [MessageController::class, 'show']);
+        Route::delete('{id}', [MessageController::class, 'destroy']);
     });
 });

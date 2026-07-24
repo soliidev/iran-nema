@@ -22,6 +22,7 @@ const PlacesListPage = lazy(() => import("@/features/admin/pages/PlacesListPage"
 const PlaceFormPage = lazy(() => import("@/features/admin/pages/PlaceFormPage"));
 const PlaceImagesPage = lazy(() => import("@/features/admin/pages/PlaceImagesPage"));
 const FavoritesPage = lazy(() => import("@/features/favorites/pages/FavoritesPage"));
+const MessagesListPage = lazy(() => import("@/features/admin/pages/MessagesListPage"));
 
 const PageLoader = () => (
   <div className="space-y-4 p-8">
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
       { path: "places/new", element: <ErrorBoundary>{withSuspense(PlaceFormPage)}</ErrorBoundary> },
       { path: "places/:id/edit", element: <ErrorBoundary>{withSuspense(PlaceFormPage)}</ErrorBoundary> },
       { path: "places/:id/images", element: <ErrorBoundary>{withSuspense(PlaceImagesPage)}</ErrorBoundary> },
+      { path: "messages", element: <ErrorBoundary>{withSuspense(MessagesListPage)}</ErrorBoundary> },
     ],
   },
 ]);
