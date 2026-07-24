@@ -11,6 +11,7 @@ const routeLabels: Record<string, string> = {
   "virtual-tour": "تور مجازی",
   about: "درباره ما",
   contact: "تماس با ما",
+  terms: "قوانین و مقررات",
   dashboard: "داشبورد",
   admin: "مدیریت",
   login: "ورود",

@@ -39,6 +39,7 @@ const Footer = () => {
               <Link to="/places" className="transition hover:text-primary">مکان‌ها</Link>
               <Link to="/about" className="transition hover:text-primary">درباره ما</Link>
               <Link to="/contact" className="transition hover:text-primary">تماس با ما</Link>
+              <Link to="/terms" className="transition hover:text-primary">قوانین و مقررات</Link>
             </div>
           </div>
 
